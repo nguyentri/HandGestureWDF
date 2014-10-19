@@ -8,11 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using System.Windows.Media.Imaging;
+using System.Windows.Media;
+using System.IO;
+using AForge.Video.FFMPEG;
+
 using maincpp;
 using ImageTakeNS;
-using  System.Windows.Media.Imaging;
-using  System.Windows.Media;
-using System.IO;
+using VideoControlNS;
 
 namespace HandGestRecg
 {
@@ -25,13 +28,13 @@ namespace HandGestRecg
 
         ImageTakeCls ImagObj = new ImageTakeCls();
 
+        VideoControlCls videoControlObj = new VideoControlCls();
 
+        VideoFileWriter writer;
 
         public MainWDF()
         {
             InitializeComponent();
-
-            diplayLogo();
 
             Thread maincppT = new Thread(maincpp_func);
             Thread dispImgT = new Thread(DisplayImg);
@@ -45,14 +48,26 @@ namespace HandGestRecg
 
         private void maincpp_func()
         {
-            maincppObj.mainCpp(ImagObj);
+            maincppObj.mainCpp(ImagObj, videoControlObj);
             Thread.Sleep(10);
         }
 
         private void UpdateStatus()
         {
+            
+
             BitmapSource image = (BitmapSource)ImagObj.getImage();
-            pictureBox.Image = BitmapFromSource(image);
+
+            Bitmap img = BitmapFromSource(image);
+
+            //if (writer != null)
+            {
+                /*write frame at avi file */
+               // writer.WriteVideoFrame(img);
+            }
+ 
+            /*Update to picture box */
+            pictureBox.Image = img;
             pictureBox.Height = (int)image.Height;
             pictureBox.Width = (int)image.Width;
         }
@@ -88,29 +103,55 @@ namespace HandGestRecg
             return bitmap;
         }
 
-        private void buttonChangeImg_Click(object sender, EventArgs e)
-        {
 
+
+        private void buttonRGBImg_Click(object sender, EventArgs e)
+        {
+            videoControlObj.VideoControl = 99; // "c"
         }
 
-        private void buttonPause_Click(object sender, EventArgs e)
+
+        private void buttonDepImage_Click(object sender, EventArgs e)
         {
-            //("pause");
+            videoControlObj.VideoControl = 100; // "d"
         }
 
-        private void diplayLogo()
+        private void buttonRecord_Click(object sender, EventArgs e)
         {
-            Image image = Image.FromFile("logo_hcmut.png");
-            pictureBoxLogo.Image = (image);
-            pictureBoxLogo.Height = (int)image.Height;
-            pictureBoxLogo.Width = (int)image.Width;
+            //videoControlObj.VideoControl = 114; // "r"
+            int width = 640;
+            int height = 480;
+
+            //VideoFileWriter writer = new VideoFileWriter();
+            writer.Open("video.avi", width, height, 25, VideoCodec.MPEG4, 1000000);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonTraining_Click(object sender, EventArgs e)
         {
-
+            videoControlObj.VideoControl = 116; // "t"
         }
 
+        private void buttonStopRec_Click(object sender, EventArgs e)
+        {
+            writer.Close();
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+
+            if (e.CloseReason == CloseReason.WindowsShutDown) return;
+
+            // Confirm user wants to close
+            switch (MessageBox.Show(this, "Are you sure you want to close?", "Closing", MessageBoxButtons.YesNo))
+            {
+                case DialogResult.No:
+                    e.Cancel = true;
+                    break;
+                default: videoControlObj.VideoControl = 27;
+                    break;
+            }
+        }
 
     }
 }

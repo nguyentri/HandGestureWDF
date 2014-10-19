@@ -33,8 +33,8 @@ extern float m_pDepthHist[MAX_DEPTH];
 #ifndef _OPENCV_HAND_UTILITIES_
 #define _OPENCV_HAND_UTILITIES_
 
-#define VIDEO_FILE	"video.avi"
-#define VIDEO_FORMAT	CV_FOURCC('M', 'J', 'P', 'G')
+#define VIDEO_FILE	"record.avi"
+#define VIDEO_FORMAT	CV_FOURCC('D','I','V','3')
 #define NUM_FINGERS 5 
 #define NUM_DEFECTS	4
 

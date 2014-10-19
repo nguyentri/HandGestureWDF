@@ -11,17 +11,18 @@
 #include "HandFeatEx.h"
 #include "HandTranning.h"
 #include "HandGestRcg.h"
-//#include "ImageTake.h"
+//#include "VideoControl.h"
 
 //#define GETSAMPLE
 
 using namespace maincpp;
 using namespace ImageTakeNS;
+using namespace VideoControlNS;
 using namespace System::Threading;
 
-int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj)
+int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, const VideoControlCls^ videoControlObj)
 {
-//	int key;
+	unsigned char key;
 
 	/*Init camera */
 	openni::Status rc = openni::STATUS_OK;
@@ -48,8 +49,8 @@ int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj)
 	/*Inifinite loop to process hand */
 	for(;;)
 	{
-	//	key = cvWaitKey(1);
-		HandViewerObj.KeyBoard(NULL, NULL, NULL);
+		key = videoControlObj->VideoControl;
+		HandViewerObj.KeyBoard(key, NULL, NULL);
 		
 		if (HandViewerObj.training_flag == FALSE)
 		{
@@ -106,8 +107,11 @@ int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj)
 						fclose(depth_file);
 					}
 					#else
-					{
-						//cvWriteFrame(HandGestureSt.writer, HandViewerObj.pDisplayImg);//Write frame
+					{  /*
+						if(videoControlObj->VideoControl == 144)
+						{
+							cvWriteFrame(HandGestureSt.writer, HandViewerObj.pDisplayImg);//Write frame
+						} */
 					}
 					#endif
 				}

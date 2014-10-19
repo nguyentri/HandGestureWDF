@@ -53,7 +53,7 @@ void init_recording(HandGetureTypeSt *pHandGestureSt)
 	int fps = 15, width = 640, height = 480;
 
 	pHandGestureSt->writer = cvCreateVideoWriter(VIDEO_FILE, VIDEO_FORMAT, fps,
-					  cvSize(width, height), VIDEO_COLOR_MODE);
+					  cvSize(width, height), VIDEO_GRAY_MODE);
 
 	if (!pHandGestureSt->writer) {
 		fprintf(stderr, "Error initializing video writer\n");
