@@ -20,7 +20,15 @@ using namespace ImageTakeNS;
 using namespace VideoControlNS;
 using namespace System::Threading;
 
-int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, const VideoControlCls^ videoControlObj)
+
+int captureImage(const IplImage* IplRawImg);
+
+static uint16_t imgidx = 0;
+static char ImgFileName_c[40] = ".\\training_data\\image\\imgxxx.png";
+static char InfImgFName_c[40] = ".\\training_data\\image\\imgxxx.txt";
+extern char t_temp_c[3];
+
+int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, VideoControlCls^ videoControlObj)
 {
 	unsigned char key;
 
@@ -46,12 +54,12 @@ int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, const VideoControlCl
 
 	handRecognition_Init();
 
-	/*Inifinite loop to process hand */
+	/*Infinite loop to process hand */
 	for(;;)
 	{
 		key = videoControlObj->VideoControl;
 		HandViewerObj.KeyBoard(key, NULL, NULL);
-		
+
 		if (HandViewerObj.training_flag == FALSE)
 		{
 			/*ReadImages Image */
@@ -89,6 +97,43 @@ int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, const VideoControlCl
 
 					//map to bitmap
 					imgTkObj->disImg = HandViewerObj.pDisplayImg;
+					//map gesture recognized to c# source
+					videoControlObj->videoOutGesture_ub = (unsigned char)HandGestureSt.number;
+
+				    if (videoControlObj->VideoControl == 111)
+					{
+						videoControlObj->VideoControl = 0xff;
+
+						sprintf(&t_temp_c[0],"%3d", imgidx);
+						for(int idx = 0; idx<3; idx++){
+							if(t_temp_c[idx] == 32)
+							{
+								t_temp_c[idx] = 48;
+							} 
+						};
+
+						strncpy(ImgFileName_c + 25, (const char*)&t_temp_c, 3);
+						strncpy(InfImgFName_c + 25, (const char*)&t_temp_c, 3);
+						cvSaveImage(ImgFileName_c,  HandSegmObj.pBinImag);
+
+						//save image information
+						FILE*	depth_file = fopen(InfImgFName_c, "w");
+
+						//fseek(depth_file, ftell(depth_file), SEEK_CUR);
+
+						fprintf(depth_file, "%d,", HandSegmObj.handPoint[0].p.x);
+						fprintf(depth_file, "%d,", HandSegmObj.handPoint[0].p.y);
+						fprintf(depth_file, "%d,", HandSegmObj.handPoint[0].d);
+
+						fclose(depth_file);
+
+						imgidx++;
+						if(imgidx == 999){
+
+							imgidx = 0;
+						}
+						else{}
+					}
 
 					#ifdef GETSAMPLE
 					{
@@ -132,6 +177,7 @@ int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, const VideoControlCl
 		}
 		else
 		{
+			videoControlObj->VideoControl = 0xff;
 			HandViewerObj.training_flag = FALSE;
 			if(createDBC_s32(NULL) != 0)
 			{
@@ -140,3 +186,6 @@ int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, const VideoControlCl
 		}
 	}
 }
+
+
+

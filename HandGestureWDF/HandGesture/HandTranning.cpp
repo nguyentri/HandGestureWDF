@@ -33,7 +33,7 @@ const char* trDBC_FileName_c = ".\\training_data\\dbc\\dbc.csv";
 //const char* d_100cm = "d100";
 const char* fname[DEPTH_NUM] = {"d792"};
 const uint16_t  depth_u16[DEPTH_NUM] = {792};
-char t_temp_c[2];
+char t_temp_c[3];
 
 void sortArray_V(float* const arr_pc, const uint8_t arrLen_u8)
 {

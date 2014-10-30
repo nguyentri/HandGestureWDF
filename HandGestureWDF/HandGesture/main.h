@@ -9,7 +9,7 @@ namespace maincpp
 	public ref class exmainCpp
 	{		
 	public:
-		int mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, const VideoControlCls^ videoControlObj);
+		int mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, VideoControlCls^ videoControlObj);
 	};
 };
 

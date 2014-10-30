@@ -30,7 +30,7 @@ namespace HandGestRecg
 
         VideoControlCls videoControlObj = new VideoControlCls();
 
-        VideoFileWriter writer;
+       // VideoFileWriter writer = new VideoFileWriter();
 
         public MainWDF()
         {
@@ -119,11 +119,11 @@ namespace HandGestRecg
         private void buttonRecord_Click(object sender, EventArgs e)
         {
             //videoControlObj.VideoControl = 114; // "r"
-            int width = 640;
-            int height = 480;
+           // int width = 640;
+            ///int height = 480;
 
             //VideoFileWriter writer = new VideoFileWriter();
-            writer.Open("video.avi", width, height, 25, VideoCodec.MPEG4, 1000000);
+            //writer.Open("video.avi", width, height, 25, VideoCodec.MPEG4, 1000000);
         }
 
         private void buttonTraining_Click(object sender, EventArgs e)
@@ -133,7 +133,7 @@ namespace HandGestRecg
 
         private void buttonStopRec_Click(object sender, EventArgs e)
         {
-            writer.Close();
+            //writer.Close();
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -148,9 +148,20 @@ namespace HandGestRecg
                 case DialogResult.No:
                     e.Cancel = true;
                     break;
-                default: videoControlObj.VideoControl = 27;
+                default:
+                    // The user wants to exit the application. Close everything down.
+                    videoControlObj.VideoControl = 27;//ESC
+                    Thread.Sleep(100);
+                    Environment.Exit(0);
                     break;
             }
+        }
+
+        private void buttonSnapshot_Click(object sender, EventArgs e)
+        {
+           // BitmapSource image = (BitmapSource)ImagObj.getImage();
+            //write image
+            videoControlObj.VideoControl = 111;// allow to capture image
         }
 
     }

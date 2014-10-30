@@ -78,7 +78,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(OPENNI2_INCLUDE);.;$(NITE2_INCLUDE);.;$(OPENCV_DIR)\..\..\include;.</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -210,6 +210,7 @@ xcopy /D /F /Y "$(ProjectDir)\glut64.dll" "$(OutDir)"
     <ClInclude Include="PalmFinder.h" />
     <ClInclude Include="PointFunctions.h" />
     <ClInclude Include="Utilities.h" />
+    <ClInclude Include="VideoControl.h" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />

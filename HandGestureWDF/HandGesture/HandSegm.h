@@ -61,7 +61,7 @@ public:
 
 	IplImage* pThImg;
 	IplImage* pMmImg;
-
+	IplImage* pBinImag;
 	IplImage* img_t;
 
 	bool handFound[2];	
@@ -93,7 +93,6 @@ private:
 	/*hand point with depthData */
 	//IplImage* img_t;
 	IplImage* img_t0;
-	IplImage* pBinImag;
 	IplImage* pRgbImg;	
 	
 	std::map<int, HistoryBuffer<HISBUFFER> *> g_histories;
