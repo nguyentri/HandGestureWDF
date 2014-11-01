@@ -123,7 +123,7 @@ int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, VideoControlCls^ vid
 
 						fprintf(depth_file, "%d,", HandSegmObj.handPoint[0].p.x);
 						fprintf(depth_file, "%d,", HandSegmObj.handPoint[0].p.y);
-						fprintf(depth_file, "%d,", HandSegmObj.handPoint[0].d);
+						fprintf(depth_file, "%d", HandSegmObj.handPoint[0].d);
 
 						fclose(depth_file);
 

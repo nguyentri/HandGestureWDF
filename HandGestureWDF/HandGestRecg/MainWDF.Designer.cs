@@ -34,7 +34,6 @@
             this.buttonDepImage = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.buttonStopRec = new System.Windows.Forms.Button();
-            this.buttonTraining = new System.Windows.Forms.Button();
             this.buttonStartRec = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
@@ -46,12 +45,15 @@
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.textBox6 = new System.Windows.Forms.TextBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.buttonTraining = new System.Windows.Forms.Button();
             this.buttonSnapshot = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox
@@ -92,7 +94,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.buttonSnapshot);
             this.groupBox1.Controls.Add(this.buttonStopRec);
             this.groupBox1.Controls.Add(this.buttonStartRec);
             this.groupBox1.Controls.Add(this.buttonDepImage);
@@ -100,7 +101,7 @@
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.groupBox1.Location = new System.Drawing.Point(175, 364);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(156, 246);
+            this.groupBox1.Size = new System.Drawing.Size(156, 206);
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Video Control";
@@ -116,18 +117,6 @@
             this.buttonStopRec.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonStopRec.UseVisualStyleBackColor = true;
             this.buttonStopRec.Click += new System.EventHandler(this.buttonStopRec_Click);
-            // 
-            // buttonTraining
-            // 
-            this.buttonTraining.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.buttonTraining.Location = new System.Drawing.Point(30, 566);
-            this.buttonTraining.Name = "buttonTraining";
-            this.buttonTraining.Size = new System.Drawing.Size(139, 31);
-            this.buttonTraining.TabIndex = 5;
-            this.buttonTraining.Text = "Start Training";
-            this.buttonTraining.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonTraining.UseVisualStyleBackColor = true;
-            this.buttonTraining.Click += new System.EventHandler(this.buttonTraining_Click);
             // 
             // buttonStartRec
             // 
@@ -256,14 +245,38 @@
             this.textBox6.TabIndex = 18;
             this.textBox6.Text = "ĐỀ TÀI: Thiết kế hệ thống nhận dạng cử chỉ tay sử dụng cảm biến Kinect";
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.buttonSnapshot);
+            this.groupBox3.Controls.Add(this.buttonTraining);
+            this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.groupBox3.Location = new System.Drawing.Point(12, 364);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(156, 206);
+            this.groupBox3.TabIndex = 20;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Training Control";
+            // 
+            // buttonTraining
+            // 
+            this.buttonTraining.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.buttonTraining.Location = new System.Drawing.Point(11, 73);
+            this.buttonTraining.Name = "buttonTraining";
+            this.buttonTraining.Size = new System.Drawing.Size(139, 31);
+            this.buttonTraining.TabIndex = 5;
+            this.buttonTraining.Text = "Start Training";
+            this.buttonTraining.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonTraining.UseVisualStyleBackColor = true;
+            this.buttonTraining.Click += new System.EventHandler(this.buttonTraining_Click);
+            // 
             // buttonSnapshot
             // 
             this.buttonSnapshot.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.buttonSnapshot.Location = new System.Drawing.Point(6, 202);
+            this.buttonSnapshot.Location = new System.Drawing.Point(11, 27);
             this.buttonSnapshot.Name = "buttonSnapshot";
             this.buttonSnapshot.Size = new System.Drawing.Size(139, 31);
             this.buttonSnapshot.TabIndex = 11;
-            this.buttonSnapshot.Text = "Take Snapshot";
+            this.buttonSnapshot.Text = "Take Sample";
             this.buttonSnapshot.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonSnapshot.UseVisualStyleBackColor = true;
             this.buttonSnapshot.Click += new System.EventHandler(this.buttonSnapshot_Click);
@@ -274,8 +287,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Info;
             this.ClientSize = new System.Drawing.Size(994, 622);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.buttonTraining);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pictureBox);
@@ -288,6 +301,7 @@
             this.panel1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -309,8 +323,9 @@
         private System.Windows.Forms.TextBox textBox7;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.Button buttonTraining;
         private System.Windows.Forms.Button buttonStopRec;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button buttonTraining;
         private System.Windows.Forms.Button buttonSnapshot;
     }
 }

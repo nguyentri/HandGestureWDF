@@ -22,7 +22,7 @@
 using namespace cv;
 
 /*Defines  */
-#define NUMBER_OF_TRAINING_SAMPLES 119
+#define NUMBER_OF_TRAINING_SAMPLES 138
 #define ATTRIBUTES_PER_SAMPLE 11
 #define NUMBER_OF_TESTING_SAMPLES 1
 #define NUMBER_OF_CLASSES 1
@@ -58,7 +58,7 @@ int read_data_from_dbc(const char* filename, Mat data, Mat classes, int n_sample
 	float tmp;
 	// if we can't read the input file then return 0
 	FILE* f = fopen( filename, "r" );
-	if( !f )
+	if( !f)
 	{
 		//MessageBox::Show("ERROR: cannot read data training");
 		return (-1);
@@ -145,7 +145,7 @@ int handRecognition(void)
 	{
 		feature_vector_st.angle_f[idx] = angleToCOG(HandGestureSt.fingers[idx], HandGestureSt.hand_center_mm, HandGestureSt.contourAxisAngle);
 		feature_vector_st.dis_f[idx] = distanceP2P((const CvPoint*)&HandGestureSt.hand_center, (const CvPoint*)&HandGestureSt.fingers[idx]) - HandGestureSt.hand_radius;
-		//feature_vector_st.dis_f[idx] = feature_vector_st.dis_f[idx]/HandGestureSt.hand_radius;
+		feature_vector_st.dis_f[idx] = feature_vector_st.dis_f[idx]/HandGestureSt.dfdisthreshold;
 	}
 
 	//sortArray_V((float* const)&feature_vector_st.dis_f[0], (const uint8_t)FINGER_NUM);

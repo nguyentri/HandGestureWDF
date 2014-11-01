@@ -93,19 +93,17 @@ void handProcessing(void)
  
 void handTrainingProcessing(void)
 {
-		//external function called for get hand gesture
-		//Call hand processing
+		//apply filters to hand image
 		filter_and_threshold(&HandGestureSt);
+		/*find hand contour */
 		find_contour(&HandGestureSt);
-		//find_convex_hull(&HandGestureSt);
+		/*Calculate contour axis angle*/
 		HandGestureSt.contourAxisAngle = calculateTilt(HandGestureSt.thr_image);
-
+		/*find list of candicate points */
 		find_listPoints(&HandGestureSt);
-
-		//find_convex_hull(&HandGestureSt);
-
+		/*find palm region */
 		FindPalm(&HandGestureSt);	
-
+		/*find finger tips */
 		fingertip(&HandGestureSt);
 } 
   
@@ -138,9 +136,9 @@ void init_HandGestureSt(HandGetureTypeSt *pHandGestureSt)
 
 void filter_and_threshold(HandGetureTypeSt *pHandGestureSt)
 {
-	cvDilate(pHandGestureSt->thr_image,pHandGestureSt->thr_image, pHandGestureSt->ker, 1);  //¿±µÈ 
+	cvDilate(pHandGestureSt->thr_image,pHandGestureSt->thr_image, pHandGestureSt->ker, 2);  //¿±µÈ 
 
-	cvErode(pHandGestureSt->thr_image,pHandGestureSt->thr_image, pHandGestureSt->ker, 1);
+	cvErode(pHandGestureSt->thr_image,pHandGestureSt->thr_image, pHandGestureSt->ker, 2);
 
  	cvSmooth(pHandGestureSt->thr_image, pHandGestureSt->thr_image, CV_MEDIAN, 7, 7, 0, 0);
 }
