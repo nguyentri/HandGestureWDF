@@ -22,12 +22,12 @@
 using namespace cv;
 
 /*Defines  */
-#define NUMBER_OF_TRAINING_SAMPLES 138
+#define NUMBER_OF_TRAINING_SAMPLES 196
 #define ATTRIBUTES_PER_SAMPLE 11
 #define NUMBER_OF_TESTING_SAMPLES 1
 #define NUMBER_OF_CLASSES 1
 
-#define GEST_CNT_MAX  2
+#define GEST_CNT_MAX  1
 
 Mat training_data = Mat(NUMBER_OF_TRAINING_SAMPLES, ATTRIBUTES_PER_SAMPLE, CV_32FC1);
 Mat training_classifications = Mat(NUMBER_OF_TRAINING_SAMPLES, 1, CV_32FC1);	
@@ -190,7 +190,7 @@ int handRecognition(void)
 			count_notanswer++;
 		}
 
-		if (count_answer >= GEST_CNT_MAX)
+		if (count_answer > GEST_CNT_MAX)
 		{
 			gest_int_flag = true;
 			sprintf(HandGestureSt.number, "%d", cur_answer);		

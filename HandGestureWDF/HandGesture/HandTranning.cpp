@@ -79,6 +79,9 @@ void sortFingers_V(CvPoint* arr_pc, const uint8_t arrLen_u8)
 }
 
 
+char DepthFileName_c[40] = ".\\training_data\\dxxx\\numx\\imgxx.txt";
+char DepthFileName0_c[40] = ".\\training_data\\dxxx\\numx\\imgx.txt";
+
 int createDBC_s32(const IplImage*	input_image)
 {
 	//uint8_t t_depth_u8 = 0;
@@ -92,8 +95,8 @@ int createDBC_s32(const IplImage*	input_image)
 	char ImgFileName_c[40]	= ".\\training_data\\dxxx\\numx\\imgxx.png";
 	char ImgFileName0_c[40] = ".\\training_data\\dxxx\\numx\\imgx.png";
 
-	char DepthFileName_c[40] = ".\\training_data\\dxxx\\numx\\imgxx.txt";
-	char DepthFileName0_c[40] = ".\\training_data\\dxxx\\numx\\imgx.txt";
+	//char DepthFileName_c[40] = ".\\training_data\\dxxx\\numx\\imgxx.txt";
+	//char DepthFileName0_c[40] = ".\\training_data\\dxxx\\numx\\imgx.txt";
 
 	HandSegm HandSegObj;
 
@@ -186,8 +189,8 @@ int createDBC_s32(const IplImage*	input_image)
 						//hand processing
 						handTrainingProcessing();
 
-						//sortFingers_V(HandGestureSt.fingers, FINGER_NUM);
-
+						//release image;
+						HandSegObj.ReleaseImg();
 
 						//map to training data
 						trainingData_st.finger_num_u8 = HandGestureSt.num_fingers;	

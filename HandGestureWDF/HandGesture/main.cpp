@@ -165,13 +165,11 @@ int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, VideoControlCls^ vid
 					//cvSaveImage("img.png", HandViewerObj.pDisplayImg);
 
 					imgTkObj->disImg = HandViewerObj.pDisplayImg;
-
-					//HandViewerObj.DisPlayImg();
 				}
 
 				imgTkObj->imgIsUpdated_b = true;
 			//}
-			//HandSegmObj.ReleaseImg();
+				HandSegmObj.ReleaseImg();
 			 //Sleep(10);
 
 		}

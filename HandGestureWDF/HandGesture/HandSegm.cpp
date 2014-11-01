@@ -98,7 +98,7 @@ void HandSegm::HandDetection()
 				openni::CoordinateConverter::convertWorldToDepth(m_depthStream, hand3DPoint[i].x, hand3DPoint[i].y, hand3DPoint[i].z, &handPoint[i].p.x, &handPoint[i].p.y, &handPoint[i].d);
 				// Convert hand point to integer
 				cvhandPoint[i] = cvPointFrom32f(handPoint_f[handNum-1]);
-				//cvCircle(this->pRgbImg, cvhandPoint[i], 2, RED, 4, CV_AA, 0);
+				cvCircle(this->pRgbImg, cvhandPoint[i], 2, RED, 4, CV_AA, 0);
 			}
 		}
 	}

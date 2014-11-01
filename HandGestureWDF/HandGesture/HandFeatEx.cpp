@@ -304,7 +304,7 @@ void HandDisplay(HandGetureTypeSt *pHandGestureSt)
 		}
 
 
-		cvCircle(HandGestureSt.image, cvPointMove(HandGestureSt.hand_center_mm, HandGestureSt.RectTopHand), 2, RED, 1, CV_AA, 0);
+		//cvCircle(HandGestureSt.image, cvPointMove(HandGestureSt.hand_center_mm, HandGestureSt.RectTopHand), 2, RED, 1, CV_AA, 0);
 
 //	}
 	//cvShowImage("DepthImage", pHandGestureSt->image);
@@ -526,7 +526,7 @@ std::vector<CvPoint> getListofPointofThImg(IplImage* pThImg, CvPoint handPoint)
 		for(idxcol = CvRectgl.y; idxcol < CvRectgl.y + CvRectgl.height; ++idxcol)
 		{
 			pointCoo.y = idxcol;
-			pointVal = cvGetReal2D(pThImg, idxcol, idxrow);
+			pointVal = cvGetReal2D(HandGestureSt.thr_image, idxcol, idxrow);
 			//if(pointCoo.x < armcenter.x + 10 && pointCoo.x < armcenter.x - 10  && *pImgData == 255)
 			if(pointVal == 255 && cvDistance2D(&pointCoo, &handPointShifted) < threshold
 				)

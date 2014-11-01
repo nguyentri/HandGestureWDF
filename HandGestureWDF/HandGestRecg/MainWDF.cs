@@ -151,7 +151,7 @@ namespace HandGestRecg
                 default:
                     // The user wants to exit the application. Close everything down.
                     videoControlObj.VideoControl = 27;//ESC
-                    Thread.Sleep(500);
+                    Thread.Sleep(1000);
                     Environment.Exit(0);
                     break;
             }
