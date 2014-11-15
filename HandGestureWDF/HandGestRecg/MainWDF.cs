@@ -30,7 +30,7 @@ namespace HandGestRecg
 
         VideoControlCls videoControlObj = new VideoControlCls();
 
-       // VideoFileWriter writer = new VideoFileWriter();
+        VideoFileWriter writer = new VideoFileWriter();
 
         public MainWDF()
         {
@@ -60,16 +60,20 @@ namespace HandGestRecg
 
             Bitmap img = BitmapFromSource(image);
 
-            //if (writer != null)
-            {
-                /*write frame at avi file */
-               // writer.WriteVideoFrame(img);
-            }
- 
             /*Update to picture box */
-            pictureBox.Image = img;
-            pictureBox.Height = (int)image.Height;
-            pictureBox.Width = (int)image.Width;
+            if (img != null)
+            {
+                pictureBox.Image = img;
+                pictureBox.Height = (int)image.Height;
+                pictureBox.Width = (int)image.Width;
+
+                /*Check to record video */
+                //if (writer.IsOpen)
+                //{
+                //    writer.WriteVideoFrame(img);
+                //}
+            }
+
         }
 
         delegate void UpdateStatusInvoker();
@@ -92,15 +96,22 @@ namespace HandGestRecg
 
         private System.Drawing.Bitmap BitmapFromSource(BitmapSource bitmapsource)
         {
-            System.Drawing.Bitmap bitmap;
-            using (MemoryStream outStream = new MemoryStream())
+            if (bitmapsource != null)
             {
-                BitmapEncoder enc = new BmpBitmapEncoder();
-                enc.Frames.Add(BitmapFrame.Create(bitmapsource));
-                enc.Save(outStream);
-                bitmap = new System.Drawing.Bitmap(outStream);
+                System.Drawing.Bitmap bitmap;
+                using (MemoryStream outStream = new MemoryStream())
+                {
+                    BitmapEncoder enc = new BmpBitmapEncoder();
+                    enc.Frames.Add(BitmapFrame.Create(bitmapsource));
+                    enc.Save(outStream);
+                    bitmap = new System.Drawing.Bitmap(outStream);
+                }
+                return bitmap;
             }
-            return bitmap;
+            else
+            {
+                return null;
+            }
         }
 
 
@@ -119,11 +130,10 @@ namespace HandGestRecg
         private void buttonRecord_Click(object sender, EventArgs e)
         {
             //videoControlObj.VideoControl = 114; // "r"
-           // int width = 640;
-            ///int height = 480;
+            int width = 640;
+            int height = 480;
 
-            //VideoFileWriter writer = new VideoFileWriter();
-            //writer.Open("video.avi", width, height, 25, VideoCodec.MPEG4, 1000000);
+            writer.Open("video.avi", width, height, 25, VideoCodec.MPEG4, 1000000);
         }
 
         private void buttonTraining_Click(object sender, EventArgs e)
@@ -133,7 +143,7 @@ namespace HandGestRecg
 
         private void buttonStopRec_Click(object sender, EventArgs e)
         {
-            //writer.Close();
+           writer.Close();
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -151,7 +161,8 @@ namespace HandGestRecg
                 default:
                     // The user wants to exit the application. Close everything down.
                     videoControlObj.VideoControl = 27;//ESC
-                    Thread.Sleep(1000);
+                    Thread.Sleep(500);
+                    //Application.Exit(e);
                     Environment.Exit(0);
                     break;
             }

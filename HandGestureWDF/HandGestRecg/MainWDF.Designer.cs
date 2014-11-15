@@ -46,8 +46,8 @@
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.buttonTraining = new System.Windows.Forms.Button();
             this.buttonSnapshot = new System.Windows.Forms.Button();
+            this.buttonTraining = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
@@ -257,18 +257,6 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Training Control";
             // 
-            // buttonTraining
-            // 
-            this.buttonTraining.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.buttonTraining.Location = new System.Drawing.Point(11, 73);
-            this.buttonTraining.Name = "buttonTraining";
-            this.buttonTraining.Size = new System.Drawing.Size(139, 31);
-            this.buttonTraining.TabIndex = 5;
-            this.buttonTraining.Text = "Start Training";
-            this.buttonTraining.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonTraining.UseVisualStyleBackColor = true;
-            this.buttonTraining.Click += new System.EventHandler(this.buttonTraining_Click);
-            // 
             // buttonSnapshot
             // 
             this.buttonSnapshot.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
@@ -281,12 +269,24 @@
             this.buttonSnapshot.UseVisualStyleBackColor = true;
             this.buttonSnapshot.Click += new System.EventHandler(this.buttonSnapshot_Click);
             // 
+            // buttonTraining
+            // 
+            this.buttonTraining.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.buttonTraining.Location = new System.Drawing.Point(11, 73);
+            this.buttonTraining.Name = "buttonTraining";
+            this.buttonTraining.Size = new System.Drawing.Size(139, 31);
+            this.buttonTraining.TabIndex = 5;
+            this.buttonTraining.Text = "Start Training";
+            this.buttonTraining.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonTraining.UseVisualStyleBackColor = true;
+            this.buttonTraining.Click += new System.EventHandler(this.buttonTraining_Click);
+            // 
             // MainWDF
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Info;
-            this.ClientSize = new System.Drawing.Size(994, 622);
+            this.ClientSize = new System.Drawing.Size(995, 618);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.panel1);

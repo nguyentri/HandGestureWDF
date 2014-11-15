@@ -136,9 +136,9 @@ void init_HandGestureSt(HandGetureTypeSt *pHandGestureSt)
 
 void filter_and_threshold(HandGetureTypeSt *pHandGestureSt)
 {
-	cvDilate(pHandGestureSt->thr_image,pHandGestureSt->thr_image, pHandGestureSt->ker, 2);  //¿±µÈ 
+	cvDilate(pHandGestureSt->thr_image,pHandGestureSt->thr_image, pHandGestureSt->ker, 1);  //¿±µÈ 
 
-	cvErode(pHandGestureSt->thr_image,pHandGestureSt->thr_image, pHandGestureSt->ker, 2);
+	cvErode(pHandGestureSt->thr_image,pHandGestureSt->thr_image, pHandGestureSt->ker, 1);
 
  	cvSmooth(pHandGestureSt->thr_image, pHandGestureSt->thr_image, CV_MEDIAN, 7, 7, 0, 0);
 }
@@ -245,68 +245,67 @@ void HandDisplay(HandGetureTypeSt *pHandGestureSt)
 {
 	int i;
 
-////	if (pHandGestureSt->num_fingers == NUM_FINGERS) {
-//
-//	if (pHandGestureSt->hull) {
-//
-//		pt0 = **CV_GET_SEQ_ELEM( CvPoint*, pHandGestureSt->hull, pHandGestureSt->hull->total - 1 );
-//
-//
-//		for(i = 0; i < pHandGestureSt->hull->total; i++ )
-//		{
-//			/*Draw convect hull */
-//			pt = **CV_GET_SEQ_ELEM( CvPoint*, pHandGestureSt->hull, i );
-//			//printf("%d,%d\n",pt.x,pt.y);
-//			cvLine( pHandGestureSt->image, cvPointMove(pt0,  pHandGestureSt->RectTopHand), cvPointMove(pt,  pHandGestureSt->RectTopHand), YELLOW,2,8,0);
-//			pt0 = pt;
-//		}
-//	}
-//
-//	if (pHandGestureSt->contour) {
-//
-//		pt0 = * (CvPoint*)cvGetSeqElem(pHandGestureSt->contour, 0);
-//
-//
-//		for(i = 1; i < pHandGestureSt->contour->total; i++ )
-//		{
-//			/*Draw convect hull */
-//			pt =  * (CvPoint*)cvGetSeqElem(pHandGestureSt->contour, i);
-//			//printf("%d,%d\n",pt.x,pt.y);
-//			cvLine( pHandGestureSt->image, cvPointMove(pt0,  pHandGestureSt->RectTopHand), cvPointMove(pt,  pHandGestureSt->RectTopHand), BLUE,2,8,0);
-//			pt0 = pt;
-//		}
-//	}
-//
-//	//	cvDrawContours(pHandGestureSt->image, pHandGestureSt->contour, BLUE, GREEN, 0, 1,
-//	//		       CV_AA, cvPoint(0, 0));
-//		cvCircle(pHandGestureSt->image, cvPointMove(pHandGestureSt->hand_center, pHandGestureSt->RectTopHand), 5, PURPLE, 1, CV_AA, 0);
-//		cvCircle(pHandGestureSt->image, cvPointMove(pHandGestureSt->hand_center, pHandGestureSt->RectTopHand), pHandGestureSt->hand_radius,
-//			 RED, 1, CV_AA, 0);
-// 
-// 		for (i = 0; i < pHandGestureSt->num_fingers; i++) {
-// 
-// 			cvCircle(pHandGestureSt->image, cvPointMove(pHandGestureSt->fingers[i], pHandGestureSt->RectTopHand), 5,
-// 				 GREEN, 3, CV_AA, 0);
-// 			cvLine(pHandGestureSt->image, cvPointMove(pHandGestureSt->hand_center, pHandGestureSt->RectTopHand), cvPointMove(pHandGestureSt->fingers[i], pHandGestureSt->RectTopHand),
-// 			       YELLOW, 1, CV_AA, 0);
-// 		}
-//
-//		for (i = 0; i < pHandGestureSt->num_defects; i++) {
-//			cvCircle(pHandGestureSt->image, cvPointMove(pHandGestureSt->defects[i], pHandGestureSt->RectTopHand), 2,
-//				 GREEN, 2, CV_AA, 0);
-//		}
-//
-		
+	if (pHandGestureSt->depthImg_b == true) {
 
-		for (i = 0; i < strlen(pHandGestureSt->number); i++)
-		{
-			cvPutText(pHandGestureSt->image, pHandGestureSt->number, cvPoint(480 + i*5, 120), &pHandGestureSt->cvFontFingerNumber, GREEN);
+		if (pHandGestureSt->hull) {
+
+			pt0 = **CV_GET_SEQ_ELEM( CvPoint*, pHandGestureSt->hull, pHandGestureSt->hull->total - 1 );
+
+
+			for(i = 0; i < pHandGestureSt->hull->total; i++ )
+			{
+				/*Draw convect hull */
+				pt = **CV_GET_SEQ_ELEM( CvPoint*, pHandGestureSt->hull, i );
+				//printf("%d,%d\n",pt.x,pt.y);
+				cvLine( pHandGestureSt->image, cvPointMove(pt0,  pHandGestureSt->RectTopHand), cvPointMove(pt,  pHandGestureSt->RectTopHand), YELLOW,2,8,0);
+				pt0 = pt;
+			}
 		}
 
+		if (pHandGestureSt->contour) {
+
+			pt0 = * (CvPoint*)cvGetSeqElem(pHandGestureSt->contour, 0);
+
+
+			for(i = 1; i < pHandGestureSt->contour->total; i++ )
+			{
+				/*Draw convect hull */
+				pt =  * (CvPoint*)cvGetSeqElem(pHandGestureSt->contour, i);
+				//printf("%d,%d\n",pt.x,pt.y);
+				cvLine( pHandGestureSt->image, cvPointMove(pt0,  pHandGestureSt->RectTopHand), cvPointMove(pt,  pHandGestureSt->RectTopHand), BLUE,2,8,0);
+				pt0 = pt;
+			}
+		}
+
+		//cvDrawContours(pHandGestureSt->image, pHandGestureSt->contour, BLUE, GREEN, 0, 1,
+		 //      CV_AA, cvPoint(0, 0));
+		cvCircle(pHandGestureSt->image, cvPointMove(pHandGestureSt->hand_center, pHandGestureSt->RectTopHand), 5, PURPLE, 1, CV_AA, 0);
+		cvCircle(pHandGestureSt->image, cvPointMove(pHandGestureSt->hand_center, pHandGestureSt->RectTopHand), pHandGestureSt->hand_radius,
+			 RED, 1, CV_AA, 0);
+ 
+ 		for (i = 0; i < pHandGestureSt->num_fingers; i++) {
+ 
+ 			cvCircle(pHandGestureSt->image, cvPointMove(pHandGestureSt->fingers[i], pHandGestureSt->RectTopHand), 5,
+ 				 GREEN, 3, CV_AA, 0);
+ 			cvLine(pHandGestureSt->image, cvPointMove(pHandGestureSt->hand_center, pHandGestureSt->RectTopHand), cvPointMove(pHandGestureSt->fingers[i], pHandGestureSt->RectTopHand),
+ 			       YELLOW, 1, CV_AA, 0);
+ 		}
+
+		for (i = 0; i < pHandGestureSt->num_defects; i++) {
+			cvCircle(pHandGestureSt->image, cvPointMove(pHandGestureSt->defects[i], pHandGestureSt->RectTopHand), 2,
+				 GREEN, 2, CV_AA, 0);
+		}
 
 		//cvCircle(HandGestureSt.image, cvPointMove(HandGestureSt.hand_center_mm, HandGestureSt.RectTopHand), 2, RED, 1, CV_AA, 0);
 
-//	}
+	}
+
+
+	for (i = 0; i < strlen(pHandGestureSt->number); i++)
+	{
+		cvPutText(pHandGestureSt->image, pHandGestureSt->number, cvPoint(480 + i*5, 120), &pHandGestureSt->cvFontFingerNumber, GREEN);
+	}
+
 	//cvShowImage("DepthImage", pHandGestureSt->image);
 	//cvShowImage("ThresholdImage", pHandGestureSt->thr_image);
 }
@@ -526,7 +525,7 @@ std::vector<CvPoint> getListofPointofThImg(IplImage* pThImg, CvPoint handPoint)
 		for(idxcol = CvRectgl.y; idxcol < CvRectgl.y + CvRectgl.height; ++idxcol)
 		{
 			pointCoo.y = idxcol;
-			pointVal = cvGetReal2D(HandGestureSt.thr_image, idxcol, idxrow);
+			pointVal = cvGetReal2D(pThImg, idxcol, idxrow);
 			//if(pointCoo.x < armcenter.x + 10 && pointCoo.x < armcenter.x - 10  && *pImgData == 255)
 			if(pointVal == 255 && cvDistance2D(&pointCoo, &handPointShifted) < threshold
 				)

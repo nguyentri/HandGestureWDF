@@ -201,6 +201,6 @@ void HandSegm::HandSegmentation(nite::HandId handID)
 	}
 	//Map to public image
 	this->pThImg = img_t;
-	//cvShowImage("moment image", this->pMmImg);
+
 }
 

@@ -90,6 +90,7 @@ int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, VideoControlCls^ vid
 					//HandGestureSt.mm_image = this->pMMImg;
 					HandGestureSt.handDepth = HandSegmObj.handPoint[0].d;
 					HandGestureSt.RectTopHand = HandSegmObj.RectTop;
+					HandGestureSt.depthImg_b = HandViewerObj.depthImgFlag_b;
 					//Call hand processing
 					handProcessing();
 					//Display Image
@@ -97,6 +98,7 @@ int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, VideoControlCls^ vid
 
 					//map to bitmap
 					imgTkObj->disImg = HandViewerObj.pDisplayImg;
+
 					//map gesture recognized to c# source
 					videoControlObj->videoOutGesture_ub = (unsigned char)HandGestureSt.number;
 
@@ -160,18 +162,17 @@ int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, VideoControlCls^ vid
 					}
 					#endif
 				}
-				else// no hand found
+				else
+				/* no hand found */
 				{
-					//cvSaveImage("img.png", HandViewerObj.pDisplayImg);
+					//imgTkObj->thImg  = HandSegmObj.pBinImag;
 
 					imgTkObj->disImg = HandViewerObj.pDisplayImg;
 				}
 
 				imgTkObj->imgIsUpdated_b = true;
 			//}
-				HandSegmObj.ReleaseImg();
-			 //Sleep(10);
-
+			//HandSegmObj.ReleaseImg();
 		}
 		else
 		{

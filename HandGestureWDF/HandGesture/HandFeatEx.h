@@ -144,6 +144,8 @@ typedef struct HandGesture {
 
 	CvFont cvFontFingerNumber;	
 	
+	bool depthImg_b;
+	
 } HandGetureTypeSt;
 
 extern HandGetureTypeSt  HandGestureSt;

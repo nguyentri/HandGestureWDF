@@ -35,6 +35,7 @@ HandViewer::HandViewer(const char* strSampleName, const char* strMWdName, const 
 	this->ppDisplayImg = &this->pColorImg;
 	this->m_pHandTracker = new nite::HandTracker;
 	this->training_flag = FALSE;
+	this->depthImgFlag_b = false;
 }
 
 //Decontructor
@@ -132,10 +133,10 @@ openni::Status HandViewer::InitOpenNI(void)
 openni::Status HandViewer::InitOpenCV()
 {
 	// Initialize HandSegmentation windows
-	//cvNamedWindow(m_MainImgName, CV_WINDOW_AUTOSIZE);
-	//cvNamedWindow(m_ThreImgName, CV_WINDOW_NORMAL);
-	//cvMoveWindow(m_MainImgName, 20, 50);
-	//cvMoveWindow(m_ThreImgName, 800, 50);
+	/*cvNamedWindow(m_MainImgName, CV_WINDOW_AUTOSIZE);
+	cvNamedWindow(m_ThreImgName, CV_WINDOW_NORMAL);
+	cvMoveWindow(m_MainImgName, 20, 50);
+	cvMoveWindow(m_ThreImgName, 800, 50);*/
 
 	// Initialize pointers that point to images
 	this->pBiDepthImg = cvCreateImage(cvSize(WIDTH, HEIGHT), IPL_DEPTH_8U, 1);
@@ -157,9 +158,11 @@ void HandViewer::OnKey(unsigned char key, int /*x*/, int /*y*/)
 		exit (1);
 	case 'd':
 		this->ppDisplayImg = &this->pDepthImg;
+		this->depthImgFlag_b = true;
 		break;
 	case 'c':
 		this->ppDisplayImg = &this->pColorImg;
+		this->depthImgFlag_b = false;
 		break;
 	case 't': 
 		this->training_flag = TRUE;
