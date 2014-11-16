@@ -68,10 +68,10 @@ namespace HandGestRecg
                 pictureBox.Width = (int)image.Width;
 
                 /*Check to record video */
-                //if (writer.IsOpen)
-                //{
-                //    writer.WriteVideoFrame(img);
-                //}
+                if (writer.IsOpen)
+                {
+                    writer.WriteVideoFrame(img);
+                }
             }
 
         }
@@ -133,7 +133,7 @@ namespace HandGestRecg
             int width = 640;
             int height = 480;
 
-            writer.Open("video.avi", width, height, 25, VideoCodec.MPEG4, 1000000);
+            writer.Open("record.avi", width, height, 25, VideoCodec.MPEG4, 1000000);
         }
 
         private void buttonTraining_Click(object sender, EventArgs e)
