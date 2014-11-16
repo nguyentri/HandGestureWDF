@@ -10,7 +10,7 @@
 
 
 #define FINGER_NUM 		5
-#define SAMPLE_NUM_MAX  64
+#define SAMPLE_NUM_MAX  99
 #define DEPTH_NUM		1
 #define GEST_NUM		11
 

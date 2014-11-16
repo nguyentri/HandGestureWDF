@@ -203,6 +203,7 @@ xcopy /D /F /Y "$(ProjectDir)\glut64.dll" "$(OutDir)"
     <ClInclude Include="HandLabel.h" />
     <ClInclude Include="HandMoment.h" />
     <ClInclude Include="HandSegm.h" />
+    <ClInclude Include="HandTranning.h" />
     <ClInclude Include="HandViewer.h" />
     <ClInclude Include="ImageTake.h" />
     <ClInclude Include="main.h" />
