@@ -28,6 +28,8 @@ static char ImgFileName_c[40] = ".\\training_data\\image\\imgxxx.png";
 static char InfImgFName_c[40] = ".\\training_data\\image\\imgxxx.txt";
 extern char t_temp_c[3];
 
+CvFont NoticeFont;
+
 int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, VideoControlCls^ videoControlObj)
 {
 	unsigned char key;
@@ -48,9 +50,11 @@ int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, VideoControlCls^ vid
 	}
 	
 	/*Hand processing initialization. */
-//	init_recording(&HandGestureSt);
+	//init_recording(&HandGestureSt);
 	//init_windows();
 	init_HandGestureSt(&HandGestureSt);
+
+	NoticeFont = cvFont(2, 1);
 
 	handRecognition_Init();
 
@@ -83,7 +87,7 @@ int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, VideoControlCls^ vid
 					//HandSegm::~HandSegm();
 					//hand feature extraction
 					/*Map to hand gesture struct to process hand */
-					HandGestureSt.dfdisthreshold = 5000/HandSegmObj.handPoint[0].d;
+					HandGestureSt.dfdisthreshold = 5000/(float)HandSegmObj.handPoint[0].d;
 					HandGestureSt.HandPoint = cvPoint(HandSegmObj.handPoint[0].p.x, HandSegmObj.handPoint[0].p.y);
 					HandGestureSt.image = HandViewerObj.pDisplayImg;
 					HandGestureSt.thr_image = HandSegmObj.pThImg;
@@ -166,7 +170,7 @@ int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, VideoControlCls^ vid
 				/* no hand found */
 				{
 					//imgTkObj->thImg  = HandSegmObj.pBinImag;
-
+					cvPutText(HandViewerObj.pDisplayImg, "Please wave your hand....", cvPoint(80, 240), &NoticeFont, GREEN);
 					imgTkObj->disImg = HandViewerObj.pDisplayImg;
 				}
 

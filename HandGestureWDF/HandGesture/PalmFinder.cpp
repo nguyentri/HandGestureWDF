@@ -33,7 +33,8 @@ void PalmFinder::FindCenterFromCandidates()
 	double result = DBL_MAX;
 	CvPoint* contCvPoint;
 
-	for(uint32_t index = 0; index < HandGestureSt.thresholdPoints.size(); index++)
+	int t_CandPointSize_ul =  HandGestureSt.thresholdPoints.size();
+	for(uint32_t index = 0; index < t_CandPointSize_ul; index++)
 	{
 		result = DBL_MAX;
 		for (uint32_t idx = 0; idx < HandGestureSt.contour->total; idx++)

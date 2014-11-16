@@ -108,7 +108,7 @@ int createDBC_s32(const IplImage*	input_image)
 	
 	g_trnDBC_pfi = fopen(trDBC_FileName_c, "w");
 	//number zero database
-	fprintf(g_trnDBC_pfi, "%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+	fprintf(g_trnDBC_pfi, "%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 	fprintf(g_trnDBC_pfi, "\n");	
 	
 	if(g_trnDBC_pfi == NULL)
@@ -201,6 +201,10 @@ int createDBC_s32(const IplImage*	input_image)
 							trainingData_st.angle_f[idx] = angleToCOG(HandGestureSt.fingers[idx], HandGestureSt.hand_center_mm, HandGestureSt.contourAxisAngle);
 							trainingData_st.dis_f[idx] = distanceP2P((const CvPoint*)&HandGestureSt.hand_center, (const CvPoint*)&HandGestureSt.fingers[idx]) - HandGestureSt.hand_radius;
 							trainingData_st.dis_f[idx] = trainingData_st.dis_f[idx]/HandGestureSt.dfdisthreshold;
+							if(idx < trainingData_st.finger_num_u8 - 1)
+							{
+								trainingData_st.angleFig_f[idx] = getAngle(&HandGestureSt.fingers[idx], &HandGestureSt.hand_center, &HandGestureSt.fingers[idx+1]);
+							}
 						}
 
 						//sortArray_V((float* const)&trainingData_st.dis_f[0], (const uint8_t)FINGER_NUM);
@@ -214,6 +218,11 @@ int createDBC_s32(const IplImage*	input_image)
 						for (int idx = 0; idx < FINGER_NUM; idx++)
 						{
 							fprintf(g_trnDBC_pfi, "%0.3f;", trainingData_st.dis_f[idx]);
+						}
+
+						for (int idx = 0; idx < FINGER_NUM - 1; idx++)
+						{
+							fprintf(g_trnDBC_pfi, "%0.3f;", trainingData_st.angleFig_f[idx]);
 						}
 
 						fprintf(g_trnDBC_pfi, "%d", t_gest_idx_u8);	
@@ -279,6 +288,10 @@ int createDBC_s32(const IplImage*	input_image)
 							trainingData_st.angle_f[idx] = angleToCOG(HandGestureSt.fingers[idx], HandGestureSt.hand_center_mm, HandGestureSt.contourAxisAngle);
 							trainingData_st.dis_f[idx] = distanceP2P((const CvPoint*)&HandGestureSt.hand_center, (const CvPoint*)&HandGestureSt.fingers[idx]) - HandGestureSt.hand_radius;
 							trainingData_st.dis_f[idx] = trainingData_st.dis_f[idx]/HandGestureSt.dfdisthreshold;
+							if(idx < trainingData_st.finger_num_u8 - 1)
+							{
+								trainingData_st.angleFig_f[idx] = getAngle(&HandGestureSt.fingers[idx], &HandGestureSt.hand_center, &HandGestureSt.fingers[idx+1]);
+							}
 						}
 
 						//sortArray_V((float* const)&trainingData_st.dis_f[0], (const uint8_t)FINGER_NUM);
@@ -292,6 +305,11 @@ int createDBC_s32(const IplImage*	input_image)
 						for (int idx = 0; idx < FINGER_NUM; idx++)
 						{
 							fprintf(g_trnDBC_pfi, "%0.3f;", trainingData_st.dis_f[idx]);
+						}
+
+						for (int idx = 0; idx < FINGER_NUM - 1; idx++)
+						{
+							fprintf(g_trnDBC_pfi, "%0.3f;", trainingData_st.angleFig_f[idx]);
 						}
 
 						fprintf(g_trnDBC_pfi, "%d", t_gest_idx_u8);	

@@ -21,7 +21,7 @@ typedef struct TRAININGDATA_ST
 	uint8_t finger_num_u8;
 	float angle_f[FINGER_NUM];
 	float dis_f[FINGER_NUM];
-	//float angleDefect_f[4];
+	float angleFig_f[FINGER_NUM - 1];
 };
 
 

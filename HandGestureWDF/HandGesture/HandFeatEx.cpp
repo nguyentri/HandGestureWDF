@@ -149,6 +149,8 @@ void find_contour(HandGetureTypeSt *pHandGestureSt)
 	double area, max_area = 0.0;
 	CvSeq *contours, *tmp, *contour = NULL;
 
+	float espApprox_f;
+
 	/* cvFindContours modifies input image, so make a copy */
 	pHandGestureSt->temp_image1 = cvCreateImage(cvGetSize(pHandGestureSt->thr_image), pHandGestureSt->thr_image->depth,  pHandGestureSt->thr_image->nChannels);
 	cvCopy(pHandGestureSt->thr_image, pHandGestureSt->temp_image1, NULL);
@@ -167,10 +169,17 @@ void find_contour(HandGetureTypeSt *pHandGestureSt)
 	}
 
 	/* Approximate contour with poly-line */
+	if(pHandGestureSt->dfdisthreshold >= 7.5f)
+	{
+		espApprox_f =  pHandGestureSt->dfdisthreshold/5;
+	}else{
+		espApprox_f = pHandGestureSt->dfdisthreshold/16;
+	}
+
 	if (contour) {
 		pHandGestureSt->Orgcontour = contour;
 		contour = cvApproxPoly(contour, sizeof(CvContour),
-				       pHandGestureSt->contour_st, CV_POLY_APPROX_DP, 0.5,
+				       pHandGestureSt->contour_st, CV_POLY_APPROX_DP, espApprox_f,
 				       1);
 		pHandGestureSt->contour = contour;
 	}
@@ -322,7 +331,7 @@ void fingertip(HandGetureTypeSt *pHandGestureSt)
 	float Yaxis;
 
 	uint16_t contTotal =  pHandGestureSt->Orgcontour->total;
-	uint16_t contStep = pHandGestureSt->dfdisthreshold<<1;
+	uint16_t contStep = ((uint16_t)(pHandGestureSt->dfdisthreshold + 0.5))<<1;
 
 	//y=3/200*x+60
 	float thresholdAngle = float(3)*pHandGestureSt->handDepth/200 + 60;
@@ -507,7 +516,7 @@ std::vector<CvPoint> getListofPointofThImg(IplImage* pThImg, CvPoint handPoint)
 	CvPoint p1 = cvPoint(CvRectgl.x, CvRectgl.y);
 	CvPoint p2 = cvPoint(CvRectgl.x + CvRectgl.width, CvRectgl.y + CvRectgl.height);
 
-	const int threshold = HandGestureSt.dfdisthreshold<<2;
+	const float threshold = HandGestureSt.dfdisthreshold*2;
 
 	//cvRectangle(CvArr* img, CvPoint pt1, CvPoint pt2, CvScalar color, int thickness=1, int line_type=8, int shift=0 )
 //	cvRectangle(HandGestureSt.image, cvPointMove(p1, HandGestureSt.RectTopHand), cvPointMove(p2, HandGestureSt.RectTopHand), GREEN, 1); 
@@ -527,7 +536,7 @@ std::vector<CvPoint> getListofPointofThImg(IplImage* pThImg, CvPoint handPoint)
 			pointCoo.y = idxcol;
 			pointVal = cvGetReal2D(pThImg, idxcol, idxrow);
 			//if(pointCoo.x < armcenter.x + 10 && pointCoo.x < armcenter.x - 10  && *pImgData == 255)
-			if(pointVal == 255 && cvDistance2D(&pointCoo, &handPointShifted) < threshold
+			if(pointVal == 255 && (cvDistance2D(&pointCoo, &handPointShifted) < threshold)
 				)
 			{
 				poinList.push_back(cvPoint(idxrow, idxcol));
@@ -552,7 +561,7 @@ float removeLowestPoint_F(const HandGetureTypeSt *pHandGestureSt, const CvPoint 
 	int idxcol = 0;
 	double pointVal;
 	CvPoint pointCoo;
-	const int threshold = HandGestureSt.dfdisthreshold<<4;
+	const int threshold = ((int)(HandGestureSt.dfdisthreshold + 0.5))<<4;
 
 	for(idxrow = CvRectgl.x ; idxrow < CvRectgl.x + CvRectgl.width; ++idxrow)
 	{

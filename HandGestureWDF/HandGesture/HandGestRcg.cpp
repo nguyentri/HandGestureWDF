@@ -22,12 +22,12 @@
 using namespace cv;
 
 /*Defines  */
-#define NUMBER_OF_TRAINING_SAMPLES 196
-#define ATTRIBUTES_PER_SAMPLE 11
+#define NUMBER_OF_TRAINING_SAMPLES 163
+#define ATTRIBUTES_PER_SAMPLE 15
 #define NUMBER_OF_TESTING_SAMPLES 1
 #define NUMBER_OF_CLASSES 1
 
-#define GEST_CNT_MAX  1
+#define GEST_CNT_MAX  2
 
 Mat training_data = Mat(NUMBER_OF_TRAINING_SAMPLES, ATTRIBUTES_PER_SAMPLE, CV_32FC1);
 Mat training_classifications = Mat(NUMBER_OF_TRAINING_SAMPLES, 1, CV_32FC1);	
@@ -146,6 +146,10 @@ int handRecognition(void)
 		feature_vector_st.angle_f[idx] = angleToCOG(HandGestureSt.fingers[idx], HandGestureSt.hand_center_mm, HandGestureSt.contourAxisAngle);
 		feature_vector_st.dis_f[idx] = distanceP2P((const CvPoint*)&HandGestureSt.hand_center, (const CvPoint*)&HandGestureSt.fingers[idx]) - HandGestureSt.hand_radius;
 		feature_vector_st.dis_f[idx] = feature_vector_st.dis_f[idx]/HandGestureSt.dfdisthreshold;
+		if(idx < feature_vector_st.finger_num_u8 - 1)
+		{
+			feature_vector_st.angleFig_f[idx] = getAngle(&HandGestureSt.fingers[idx], &HandGestureSt.hand_center, &HandGestureSt.fingers[idx+1]);
+		}	
 	}
 
 	//sortArray_V((float* const)&feature_vector_st.dis_f[0], (const uint8_t)FINGER_NUM);
@@ -165,7 +169,12 @@ int handRecognition(void)
 		testing_data.at<float>(0, idx) = feature_vector_st.dis_f[idy++];
 		//fprintf(g_recg_pfi, "%0.3f;", feature_vector_st.dis_f[idx]);
 	}
-				
+		
+	idy = 0;
+	for (; idx < (FINGER_NUM*3); idx++)
+	{
+		testing_data.at<float>(0, idx) = feature_vector_st.angleFig_f[idy++];
+	}
 	//fclose(g_recg_pfi);
 			
 	//if (read_data_from_dbc(recg_FileName_c, testing_data, testing_classifications, NUMBER_OF_TESTING_SAMPLES) != (-1))
