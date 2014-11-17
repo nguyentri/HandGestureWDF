@@ -104,7 +104,7 @@ int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, VideoControlCls^ vid
 					imgTkObj->disImg = HandViewerObj.pDisplayImg;
 
 					//map gesture recognized to c# source
-					videoControlObj->videoOutGesture_ub = (unsigned char)HandGestureSt.number;
+					videoControlObj->videoOutGesture_ub = (unsigned char)HandGestureSt.gesture;
 
 				    if (videoControlObj->VideoControl == 111)
 					{
@@ -172,6 +172,7 @@ int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, VideoControlCls^ vid
 					//imgTkObj->thImg  = HandSegmObj.pBinImag;
 					cvPutText(HandViewerObj.pDisplayImg, "Please wave your hand....", cvPoint(80, 240), &NoticeFont, GREEN);
 					imgTkObj->disImg = HandViewerObj.pDisplayImg;
+					videoControlObj->videoOutGesture_ub = 0xff;
 				}
 
 				imgTkObj->imgIsUpdated_b = true;

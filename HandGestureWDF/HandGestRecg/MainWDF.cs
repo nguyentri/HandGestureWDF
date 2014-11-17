@@ -54,8 +54,6 @@ namespace HandGestRecg
 
         private void UpdateStatus()
         {
-            
-
             BitmapSource image = (BitmapSource)ImagObj.getImage();
 
             Bitmap img = BitmapFromSource(image);
@@ -133,7 +131,7 @@ namespace HandGestRecg
             int width = 640;
             int height = 480;
 
-            writer.Open("record.avi", width, height, 25, VideoCodec.MPEG4, 1000000);
+            writer.Open("record.avi", width, height, 16, VideoCodec.MPEG4, 1000000);
         }
 
         private void buttonTraining_Click(object sender, EventArgs e)

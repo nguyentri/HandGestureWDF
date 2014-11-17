@@ -136,6 +136,8 @@ typedef struct HandGesture {
 	
 	char number[20];
 
+	uint8_t gesture;
+
 	CvPoint HandPoint;
 
 	CvPoint RectTopHand;

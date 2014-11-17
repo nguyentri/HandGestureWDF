@@ -12,7 +12,7 @@ namespace VideoControlNS
 		VideoControlCls(){
 						isNewGesture_b = false;
 						VideoControl = 0;
-						videoOutGesture_ub = 0;};
+						videoOutGesture_ub = 0xff;};
 		bool isNewGesture_b;
 	};
 };

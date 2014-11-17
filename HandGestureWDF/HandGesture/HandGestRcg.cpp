@@ -27,7 +27,7 @@ using namespace cv;
 #define NUMBER_OF_TESTING_SAMPLES 1
 #define NUMBER_OF_CLASSES 1
 
-#define GEST_CNT_MAX  2
+#define GEST_CNT_MAX  3
 
 Mat training_data = Mat(NUMBER_OF_TRAINING_SAMPLES, ATTRIBUTES_PER_SAMPLE, CV_32FC1);
 Mat training_classifications = Mat(NUMBER_OF_TRAINING_SAMPLES, 1, CV_32FC1);	
@@ -202,6 +202,7 @@ int handRecognition(void)
 		if (count_answer > GEST_CNT_MAX)
 		{
 			gest_int_flag = true;
+			HandGestureSt.gesture = (uint8_t)cur_answer;
 			sprintf(HandGestureSt.number, "%d", cur_answer);		
 		}
 		else if(count_notanswer >= GEST_CNT_MAX){
