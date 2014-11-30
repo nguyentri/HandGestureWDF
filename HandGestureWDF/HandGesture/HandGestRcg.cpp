@@ -22,7 +22,7 @@
 using namespace cv;
 
 /*Defines  */
-#define NUMBER_OF_TRAINING_SAMPLES 166
+#define NUMBER_OF_TRAINING_SAMPLES 927
 #define ATTRIBUTES_PER_SAMPLE 15
 #define NUMBER_OF_TESTING_SAMPLES 1
 #define NUMBER_OF_CLASSES 1
@@ -58,7 +58,7 @@ int read_data_from_dbc(const char* filename, Mat data, Mat classes, int n_sample
 	float tmp;
 	// if we can't read the input file then return 0
 	FILE* f = fopen( filename, "r" );
-	if( !f)
+	if(f->_base == nullptr)
 	{
 		//MessageBox::Show("ERROR: cannot read data training");
 		return (-1);

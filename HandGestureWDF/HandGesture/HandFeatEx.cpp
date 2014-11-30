@@ -528,10 +528,14 @@ std::vector<CvPoint> getListofPointofThImg(IplImage* pThImg, CvPoint handPoint)
 	//IplImage* temp = cvCreateImage(cvGetSize(HandGestureSt.thr_image),HandGestureSt.thr_image->depth,  HandGestureSt.thr_image->nChannels);
 	//cvZero(temp);
 	//int idxrow = CvRectgl.x ; idxrow < CvRectgl.x + CvRectgl.width; ++idxrow
-	for(idxrow = CvRectgl.x ; idxrow < CvRectgl.x + CvRectgl.width; ++idxrow)
+
+	int idxRowMax = CvRectgl.x + CvRectgl.width;
+	int idxColMax = CvRectgl.y + CvRectgl.height;
+
+	for(idxrow = CvRectgl.x ; (idxrow < idxRowMax) && (idxRowMax < HandGestureSt.thr_image->width) ; ++idxrow)
 	{
 		pointCoo.x = idxrow;
-		for(idxcol = CvRectgl.y; idxcol < CvRectgl.y + CvRectgl.height; ++idxcol)
+		for(idxcol = CvRectgl.y; (idxcol < idxColMax) && (idxColMax < HandGestureSt.thr_image->height); ++idxcol)
 		{
 			pointCoo.y = idxcol;
 			pointVal = cvGetReal2D(pThImg, idxcol, idxrow);

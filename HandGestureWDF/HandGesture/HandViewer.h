@@ -35,6 +35,8 @@ public:
 	void DisPlayImg();	//Display Img
 	void DisPlayImg(IplImage* pthrhImg);
 	void KeyBoard(unsigned char key, int x, int y);
+	openni::Status InitOpenNI(void);
+	openni::Status InitOpenCV();
 
 	nite::HandTracker*		m_pHandTracker;
 	nite::HandTrackerFrameRef handFrame;
@@ -52,8 +54,6 @@ private:
 	/*********************************
 	*	private methods
 	*********************************/ 
-	openni::Status InitOpenNI(void);
-	openni::Status InitOpenCV();
 	void OnKey(unsigned char key, int x, int y);	
 	HandViewer(const HandViewer&);
 	HandViewer& operator=(HandViewer&);

@@ -36,150 +36,146 @@ int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, VideoControlCls^ vid
 
 	/*Init camera */
 	openni::Status rc = openni::STATUS_OK;
-	/*Declare objects */
 
+	/*
+	*Declare objects 
+	*/
+	/*Hand viewer object */
 	HandViewer HandViewerObj("Hand Gesture", "Main Window", "Threshold Image");
+	/*Hand segmentation object */
 	HandSegm HandSegmObj;
 
-	/*Init kinect openni/ open cv */
-	rc = HandViewerObj.Init();
-	/* Check if init is ok? */
-	if (rc != openni::STATUS_OK)
-	{
-		return 1;
-	}
-	
+	/* open cv */
+	HandViewerObj.InitOpenCV();
+
 	/*Hand processing initialization. */
-	//init_recording(&HandGestureSt);
-	//init_windows();
 	init_HandGestureSt(&HandGestureSt);
 
+	/*Init font to display the letter in bitmap */
 	NoticeFont = cvFont(2, 1);
 
+	/*Init SVM to recognize gestures */
 	handRecognition_Init();
 
-	/*Infinite loop to process hand */
-	for(;;)
+	while(1)
 	{
+		/*Init kinect openni*/
+		rc = HandViewerObj.InitOpenNI();
+
+		/*Check the button event */
 		key = videoControlObj->VideoControl;
 		HandViewerObj.KeyBoard(key, NULL, NULL);
 
-		if (HandViewerObj.training_flag == FALSE)
+		if (rc == openni::STATUS_OK)
 		{
-			/*ReadImages Image */
-			HandViewerObj.ReadImages();
+			/*Infinite loop to process hand */
+			for(;;)
+			{
+				/*Check the button event */
+				key = videoControlObj->VideoControl;
+				HandViewerObj.KeyBoard(key, NULL, NULL);
 
-			/*Detect hand */
-			HandSegmObj.HandSegmInit(HandViewerObj.pBiDepthImg, 
-										HandViewerObj.pDisplayImg, 
-										HandViewerObj.m_pHandTracker,
-										&HandViewerObj.handFrame);
-
-			/*Hand detection */
-			HandSegmObj.HandDetection();
-
-			//processing hands if hands are found
-			//for (int idx = 0; idx <= HandSegmObj.GetNumHand(); idx++) {
-				if(HandSegmObj.handFound[0])
+				if (HandViewerObj.training_flag == FALSE)
 				{
-					//hand segmentation
-					HandSegmObj.HandSegmentation(0);
-					//HandSegm::~HandSegm();
-					//hand feature extraction
-					/*Map to hand gesture struct to process hand */
-					HandGestureSt.dfdisthreshold = 5000/(float)HandSegmObj.handPoint[0].d;
-					HandGestureSt.HandPoint = cvPoint(HandSegmObj.handPoint[0].p.x, HandSegmObj.handPoint[0].p.y);
-					HandGestureSt.image = HandViewerObj.pDisplayImg;
-					HandGestureSt.thr_image = HandSegmObj.pThImg;
-					//HandGestureSt.mm_image = this->pMMImg;
-					HandGestureSt.handDepth = HandSegmObj.handPoint[0].d;
-					HandGestureSt.RectTopHand = HandSegmObj.RectTop;
-					HandGestureSt.depthImg_b = HandViewerObj.depthImgFlag_b;
-					//Call hand processing
-					handProcessing();
-					//Display Image
-					//HandViewerObj.DisPlayImg(HandSegmObj.pThImg);
+					/*ReadImages Image */
+					HandViewerObj.ReadImages();
 
-					//map to bitmap
-					imgTkObj->disImg = HandViewerObj.pDisplayImg;
+					/*Detect hand */
+					HandSegmObj.HandSegmInit(HandViewerObj.pBiDepthImg, 
+												HandViewerObj.pDisplayImg, 
+												HandViewerObj.m_pHandTracker,
+												&HandViewerObj.handFrame);
 
-					//map gesture recognized to c# source
-					videoControlObj->videoOutGesture_ub = (unsigned char)HandGestureSt.gesture;
+					/*Hand detection */
+					HandSegmObj.HandDetection();
 
-				    if (videoControlObj->VideoControl == 111)
-					{
-						videoControlObj->VideoControl = 0xff;
-
-						sprintf(&t_temp_c[0],"%3d", imgidx);
-						for(int idx = 0; idx<3; idx++){
-							if(t_temp_c[idx] == 32)
-							{
-								t_temp_c[idx] = 48;
-							} 
-						};
-
-						strncpy(ImgFileName_c + 25, (const char*)&t_temp_c, 3);
-						strncpy(InfImgFName_c + 25, (const char*)&t_temp_c, 3);
-						cvSaveImage(ImgFileName_c,  HandSegmObj.pBinImag);
-
-						//save image information
-						FILE*	depth_file = fopen(InfImgFName_c, "w");
-
-						//fseek(depth_file, ftell(depth_file), SEEK_CUR);
-
-						fprintf(depth_file, "%d,", HandSegmObj.handPoint[0].p.x);
-						fprintf(depth_file, "%d,", HandSegmObj.handPoint[0].p.y);
-						fprintf(depth_file, "%d", HandSegmObj.handPoint[0].d);
-
-						fclose(depth_file);
-
-						imgidx++;
-						if(imgidx == 999){
-
-							imgidx = 0;
-						}
-						else{}
-					}
-
-					#ifdef GETSAMPLE
-					{
-						HandViewerObj.DisPlayImg(HandSegmObj.pThImg);
-						cvWriteFrame(HandGestureSt.writer, HandSegmObj.img_t);//Write frame
-
-
-						FILE*	depth_file = fopen("depthhand.txt", "w+" );
-
-						fseek(depth_file, ftell(depth_file), SEEK_CUR);
-
-						fprintf(depth_file, "%d,", HandSegmObj.handPoint[0].p.x);
-						fprintf(depth_file, "%d,", HandSegmObj.handPoint[0].p.y);
-						fprintf(depth_file, "%d,", HandSegmObj.handPoint[0].d);
-
-						fclose(depth_file);
-					}
-					#else
-					{  /*
-						if(videoControlObj->VideoControl == 144)
+					//processing hands if hands are found
+					//for (int idx = 0; idx <= HandSegmObj.GetNumHand(); idx++) {
+						if(HandSegmObj.handFound[0])
 						{
-							cvWriteFrame(HandGestureSt.writer, HandViewerObj.pDisplayImg);//Write frame
-						} */
-					}
-					#endif
+							//hand segmentation
+							HandSegmObj.HandSegmentation(0);
+							//HandSegm::~HandSegm();
+							//hand feature extraction
+							/*Map to hand gesture struct to process hand */
+							HandGestureSt.dfdisthreshold = 5000/(float)HandSegmObj.handPoint[0].d;
+							HandGestureSt.HandPoint = cvPoint(HandSegmObj.handPoint[0].p.x, HandSegmObj.handPoint[0].p.y);
+							HandGestureSt.image = HandViewerObj.pDisplayImg;
+							HandGestureSt.thr_image = HandSegmObj.pThImg;
+							//HandGestureSt.mm_image = this->pMMImg;
+							HandGestureSt.handDepth = HandSegmObj.handPoint[0].d;
+							HandGestureSt.RectTopHand = HandSegmObj.RectTop;
+							HandGestureSt.depthImg_b = HandViewerObj.depthImgFlag_b;
+							//Call hand processing
+							handProcessing();
+							//Display Image
+							//HandViewerObj.DisPlayImg(HandSegmObj.pThImg);
+
+							//map to bitmap
+							imgTkObj->disImg = HandViewerObj.pDisplayImg;
+
+							//map gesture recognized to c# source
+							videoControlObj->videoOutGesture_ub = (unsigned char)HandGestureSt.gesture;
+
+							/*Check whether event to save the sample */
+							if (videoControlObj->VideoControl == 111)
+							{
+								videoControlObj->VideoControl = 0xff;
+
+								sprintf(&t_temp_c[0],"%3d", imgidx);
+								for(int idx = 0; idx<3; idx++){
+									if(t_temp_c[idx] == 32)
+									{
+										t_temp_c[idx] = 48;
+									} 
+								};
+
+								strncpy(ImgFileName_c + 25, (const char*)&t_temp_c, 3);
+								strncpy(InfImgFName_c + 25, (const char*)&t_temp_c, 3);
+								cvSaveImage(ImgFileName_c,  HandSegmObj.pBinImag);
+
+								//save image information
+								FILE*	depth_file = fopen(InfImgFName_c, "w");
+								fprintf(depth_file, "%d,", HandSegmObj.handPoint[0].p.x);
+								fprintf(depth_file, "%d,", HandSegmObj.handPoint[0].p.y);
+								fprintf(depth_file, "%d", HandSegmObj.handPoint[0].d);
+
+								fclose(depth_file);
+
+								imgidx++;
+								/*check maximum sample is reach */
+								if(imgidx == 999){
+
+									imgidx = 0;
+								}
+								else{
+								}
+
+							}
+						}
+						else/* no hand found */
+						{
+							/*Notify user waving his hand in order to system be able to recognize his hand */
+							cvPutText(HandViewerObj.pDisplayImg, "Please wave your hand....", cvPoint(80, 240), &NoticeFont, GREEN);
+							imgTkObj->disImg = HandViewerObj.pDisplayImg;
+							videoControlObj->videoOutGesture_ub = 0xff;
+						}
+
+						imgTkObj->imgIsUpdated_b = true;
+					//}
 				}
 				else
-				/* no hand found */
 				{
-					//imgTkObj->thImg  = HandSegmObj.pBinImag;
-					cvPutText(HandViewerObj.pDisplayImg, "Please wave your hand....", cvPoint(80, 240), &NoticeFont, GREEN);
-					imgTkObj->disImg = HandViewerObj.pDisplayImg;
-					videoControlObj->videoOutGesture_ub = 0xff;
-				}
-
-				imgTkObj->imgIsUpdated_b = true;
-			//}
-			//HandSegmObj.ReleaseImg();
+					videoControlObj->VideoControl = 0xff;
+					HandViewerObj.training_flag = FALSE;
+					if(createDBC_s32(NULL) != 0)
+					{
+						printf("error in training data");
+					}
+				} 				
+			}
 		}
-		else
+		else if (HandViewerObj.training_flag == TRUE)
 		{
 			videoControlObj->VideoControl = 0xff;
 			HandViewerObj.training_flag = FALSE;
@@ -187,6 +183,8 @@ int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, VideoControlCls^ vid
 			{
 				printf("error in training data");
 			}
+		} 
+		else{
 		}
 	}
 }

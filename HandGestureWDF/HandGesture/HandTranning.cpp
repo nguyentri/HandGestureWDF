@@ -35,8 +35,8 @@ const char* trDBC_FileName_c = ".\\training_data\\dbc\\dbc.csv";
 //const char* d_65cm 	= "d065";
 //const char* d_70cm 	= "d700";
 //const char* d_100cm = "d100";
-const char* fname[DEPTH_NUM] = {"d792"};
-const uint16_t  depth_u16[DEPTH_NUM] = {792};
+const char* fname[DEPTH_NUM] = {"user0", "user1", "user2", "user4"};
+//const uint16_t  depth_u16[DEPTH_NUM] = {792};
 char t_temp_c[3];
 
 void sortArray_V(float* const arr_pc, const uint8_t arrLen_u8)
@@ -78,25 +78,20 @@ void sortFingers_V(CvPoint* arr_pc, const uint8_t arrLen_u8)
     }
 }
 
+char ImgFileName_c[40];	//= ".\\training_data\\userx\\numx\\imgxx.png";
+char ImgFileName0_c[40]; //= ".\\training_data\\userx\\numx\\imgx.png";
 
-char DepthFileName_c[40] = ".\\training_data\\dxxx\\numx\\imgxx.txt";
-char DepthFileName0_c[40] = ".\\training_data\\dxxx\\numx\\imgx.txt";
+char DepthFileName_c[40]; //= ".\\training_data\\userx\\numx\\imgxx.txt";
+char DepthFileName0_c[40]; //= ".\\training_data\\userx\\numx\\imgx.txt";
+
 
 int createDBC_s32(const IplImage*	input_image)
 {
 	//uint8_t t_depth_u8 = 0;
 	//uint8_t t_gest_name_u8 = 0;
 	uint8_t t_smp_idx_u8 = 1;
-	uint8_t	t_depth_idx_u8 = 0;
+	uint8_t	t_user_num = 0;
 	uint8_t t_gest_idx_u8 = 1;
-
-	//char t_depth_c[2];
-	//char t_gest_c[2];
-	char ImgFileName_c[40]	= ".\\training_data\\dxxx\\numx\\imgxx.png";
-	char ImgFileName0_c[40] = ".\\training_data\\dxxx\\numx\\imgx.png";
-
-	//char DepthFileName_c[40] = ".\\training_data\\dxxx\\numx\\imgxx.txt";
-	//char DepthFileName0_c[40] = ".\\training_data\\dxxx\\numx\\imgx.txt";
 
 	HandSegm HandSegObj;
 
@@ -119,35 +114,42 @@ int createDBC_s32(const IplImage*	input_image)
 	}
 
 	
-	while(t_depth_idx_u8 < DEPTH_NUM)
+	while(t_user_num < DEPTH_NUM)
 	{
+		//Initalize name of files
+		strcpy (ImgFileName_c, ".\\training_data\\userx\\numx\\imgxx.png");
+		strcpy (ImgFileName0_c,".\\training_data\\userx\\numx\\imgx.png");
+		strcpy (DepthFileName_c, ".\\training_data\\userx\\numx\\imgxx.txt");
+		strcpy (DepthFileName0_c, ".\\training_data\\userx\\numx\\imgx.txt");
 		/* Get file name */
 		/* Replace dxxx to folder name of depth image */
-		strncpy(ImgFileName_c + 16, fname[t_depth_idx_u8], 4);
-		strncpy(ImgFileName0_c + 16, fname[t_depth_idx_u8], 4);
-		strncpy(DepthFileName_c + 16, fname[t_depth_idx_u8], 4);
-		strncpy(DepthFileName0_c + 16, fname[t_depth_idx_u8], 4);
+		strncpy(ImgFileName_c + 16, fname[t_user_num], 5);
+		strncpy(ImgFileName0_c + 16, fname[t_user_num], 5);
+		strncpy(DepthFileName_c + 16, fname[t_user_num], 5);
+		strncpy(DepthFileName0_c + 16, fname[t_user_num], 5);
+
+		t_gest_idx_u8 = 1;
 		while(t_gest_idx_u8 < GEST_NUM)
 		{
 			if(t_gest_idx_u8 < 10)
 			{
 				sprintf(&t_temp_c[0],"%d", t_gest_idx_u8);	
-				strncpy(ImgFileName_c + 24, (const char*)&t_temp_c, 1);
-				strncpy(ImgFileName0_c + 24, (const char*)&t_temp_c, 1);
-				strncpy(DepthFileName_c + 24, (const char*)&t_temp_c, 1);
-				strncpy(DepthFileName0_c + 24, (const char*)&t_temp_c, 1);
+				strncpy(ImgFileName_c + 25, (const char*)&t_temp_c, 1);
+				strncpy(ImgFileName0_c + 25, (const char*)&t_temp_c, 1);
+				strncpy(DepthFileName_c + 25, (const char*)&t_temp_c, 1);
+				strncpy(DepthFileName0_c + 25, (const char*)&t_temp_c, 1);
 			}
 			else
 			{
 				sprintf(&t_temp_c[0],"%d", t_gest_idx_u8);	
-				strncpy(ImgFileName_c + 23, (const char*)&t_temp_c, 2);
-				strncpy(ImgFileName0_c + 23, (const char*)&t_temp_c, 2);
-				strncpy(DepthFileName_c + 23, (const char*)&t_temp_c, 2);
-				strncpy(DepthFileName0_c + 23, (const char*)&t_temp_c, 2);
+				strncpy(ImgFileName_c + 24, (const char*)&t_temp_c, 2);
+				strncpy(ImgFileName0_c + 24, (const char*)&t_temp_c, 2);
+				strncpy(DepthFileName_c + 24, (const char*)&t_temp_c, 2);
+				strncpy(DepthFileName0_c + 24, (const char*)&t_temp_c, 2);
 			}
 
-			t_smp_idx_u8 = 0;
-			while (t_smp_idx_u8 <= SAMPLE_NUM_MAX)
+ 			t_smp_idx_u8 = 1;
+			while (t_smp_idx_u8 < SAMPLE_NUM_MAX)
 			{
 				//g_trnDBC_pfi = fopen(trDBC_FileName_c, "a+");
 
@@ -155,23 +157,21 @@ int createDBC_s32(const IplImage*	input_image)
 				if(t_smp_idx_u8 < 10)
 				{
 					sprintf(t_temp_c,"%d", t_smp_idx_u8);
-					strncpy(ImgFileName0_c + 29, (const char*)&t_temp_c, 1);
-					strncpy(DepthFileName0_c + 29, (const char*)&t_temp_c, 1);
+					strncpy(ImgFileName0_c + 30, (const char*)&t_temp_c, 1);
+					strncpy(DepthFileName0_c + 30, (const char*)&t_temp_c, 1);
 
 					/*open image sample */
 					t_imgSamp_pImg = cvLoadImage(ImgFileName0_c, CV_LOAD_IMAGE_GRAYSCALE);
-					if(t_imgSamp_pImg != NULL)
+					//Get depth of sample
+					FILE* depth_F = fopen(DepthFileName0_c, "r");
+					if((t_imgSamp_pImg != NULL) && (depth_F != NULL))
 					{	
-						//Get depth of sample
-						FILE* depth_F = fopen(DepthFileName0_c, "r");
-						if(depth_F != NULL){
-							//Get the depth of hand point
-							fscanf(depth_F, "%d,", &hand_st.p.x);
-							fscanf(depth_F, "%d,", &hand_st.p.y);
-							fscanf(depth_F, "%d,", &hand_st.d);	
-						}
+						//Get the depth of hand point
+						fscanf(depth_F, "%d,", &hand_st.p.x);
+						fscanf(depth_F, "%d,", &hand_st.p.y);
+						fscanf(depth_F, "%d,", &hand_st.d);
 						fclose(depth_F);
-
+				
 						/*extract feature */
 						HandSegObj.handPoint[0].d = hand_st.d;
 						HandSegObj.handPoint[0].p = cvPoint(hand_st.p.x, hand_st.p.y);
@@ -181,16 +181,17 @@ int createDBC_s32(const IplImage*	input_image)
 						/*Map to hand gesture struct to process the hand */
 						HandGestureSt.dfdisthreshold = 5000/HandSegObj.handPoint[0].d;
 						HandGestureSt.HandPoint = cvPoint(HandSegObj.handPoint[0].p.x, HandSegObj.handPoint[0].p.y);
-						HandGestureSt.thr_image = HandSegObj.pThImg;
+
+						//HandGestureSt.thr_image = HandSegObj.pThImg;
+						HandGestureSt.thr_image = cvCreateImage(cvGetSize(HandSegObj.pThImg), HandSegObj.pThImg->depth,  HandSegObj.pThImg->nChannels);
+						cvCopy(HandSegObj.pThImg, HandGestureSt.thr_image, NULL);
+
 						//HandGestureSt.mm_image = this->pMMImg;
 						HandGestureSt.handDepth = HandSegObj.handPoint[0].d;
 						HandGestureSt.RectTopHand = HandSegObj.RectTop;
 
 						//hand processing
 						handTrainingProcessing();
-
-						//release image;
-						HandSegObj.ReleaseImg();
 
 						//map to training data
 						trainingData_st.finger_num_u8 = HandGestureSt.num_fingers;	
@@ -206,9 +207,6 @@ int createDBC_s32(const IplImage*	input_image)
 								trainingData_st.angleFig_f[idx] = getAngle(&HandGestureSt.fingers[idx], &HandGestureSt.hand_center, &HandGestureSt.fingers[idx+1]);
 							}
 						}
-
-						//sortArray_V((float* const)&trainingData_st.dis_f[0], (const uint8_t)FINGER_NUM);
-						//sortArray_V((float* const)&trainingData_st.angle_f[0], (const uint8_t)FINGER_NUM);
 
 						for (int idx = 0; idx < FINGER_NUM; idx++)
 						{
@@ -231,6 +229,11 @@ int createDBC_s32(const IplImage*	input_image)
 						//fclose(g_trnDBC_pfi);
 
 						t_smp_idx_u8++;
+
+						//release image;
+						HandSegObj.ReleaseImg();
+						cvReleaseImage(&HandGestureSt.thr_image);
+
 					}
 					else
 					{
@@ -243,8 +246,8 @@ int createDBC_s32(const IplImage*	input_image)
 				else //number of samples is greater than or equal to 10
 				{
 					sprintf(t_temp_c,"%d", t_smp_idx_u8);
-					strncpy(ImgFileName_c + 29, (const char*)&t_temp_c, 2);
-					strncpy(DepthFileName_c + 29, (const char*)&t_temp_c, 2);
+					strncpy(ImgFileName_c + 30, (const char*)&t_temp_c, 2);
+					strncpy(DepthFileName_c + 30, (const char*)&t_temp_c, 2);
 
 					/*open image sample */
 					t_imgSamp_pImg = cvLoadImage(ImgFileName_c, CV_LOAD_IMAGE_GRAYSCALE);
@@ -263,21 +266,22 @@ int createDBC_s32(const IplImage*	input_image)
 						/*extract feature */
 						HandSegObj.handPoint[0].d = hand_st.d;
 						HandSegObj.handPoint[0].p = cvPoint(hand_st.p.x, hand_st.p.y);
+						HandSegObj.pBinImag = t_imgSamp_pImg;
 						HandSegObj.HandSegmentation(0);
 
 						/*Map to hand gesture struct to process the hand */
 						HandGestureSt.dfdisthreshold = 5000/HandSegObj.handPoint[0].d;
 						HandGestureSt.HandPoint = cvPoint(HandSegObj.handPoint[0].p.x, HandSegObj.handPoint[0].p.y);
-						HandGestureSt.thr_image = HandSegObj.pThImg;
-						//HandGestureSt.mm_image = this->pMMImg;
+
+						//HandGestureSt.thr_image = HandSegObj.pThImg;
+						HandGestureSt.thr_image = cvCreateImage(cvGetSize(HandSegObj.pThImg), HandSegObj.pThImg->depth,  HandSegObj.pThImg->nChannels);
+						cvCopy(HandSegObj.pThImg, HandGestureSt.thr_image, NULL);
+
 						HandGestureSt.handDepth = HandSegObj.handPoint[0].d;
 						HandGestureSt.RectTopHand = HandSegObj.RectTop;
 
 						//hand processing
 						handTrainingProcessing();
-
-						//sortFingers_V(HandGestureSt.fingers, FINGER_NUM);
-
 
 						//map to training data
 						trainingData_st.finger_num_u8 = HandGestureSt.num_fingers;	
@@ -293,9 +297,6 @@ int createDBC_s32(const IplImage*	input_image)
 								trainingData_st.angleFig_f[idx] = getAngle(&HandGestureSt.fingers[idx], &HandGestureSt.hand_center, &HandGestureSt.fingers[idx+1]);
 							}
 						}
-
-						//sortArray_V((float* const)&trainingData_st.dis_f[0], (const uint8_t)FINGER_NUM);
-						//sortArray_V((float* const)&trainingData_st.angle_f[0], (const uint8_t)FINGER_NUM);
 
 						for (int idx = 0; idx < FINGER_NUM; idx++)
 						{
@@ -315,6 +316,10 @@ int createDBC_s32(const IplImage*	input_image)
 						fprintf(g_trnDBC_pfi, "%d", t_gest_idx_u8);	
 						fprintf(g_trnDBC_pfi, "\n");	
 						t_smp_idx_u8++;
+
+						//release image;
+						HandSegObj.ReleaseImg();
+						cvReleaseImage(&HandGestureSt.thr_image);
 					}
 					else
 					{
@@ -326,7 +331,7 @@ int createDBC_s32(const IplImage*	input_image)
 			}
 			t_gest_idx_u8++;
 		}
-		t_depth_idx_u8++;
+		t_user_num++;
 	}
 
 	if (fclose(g_trnDBC_pfi) == 0)
