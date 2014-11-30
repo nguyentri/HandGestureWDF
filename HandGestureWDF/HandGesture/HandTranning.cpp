@@ -27,9 +27,8 @@
 
 FILE* g_trnDBC_pfi;
 
-const char* trDBC_FileName_c = ".\\training_data\\dbc\\dbc.csv";
-
-
+//const char* trDBC_FileName_c = ".\\training_data\\dbc\\dbc.csv";
+const char* trDBC_FileName_c = "d:\\Thesis\\source\\githubSource\\HandGestureWDF.git\\trunk\\HandGestureWDF\\HandGestRecg\\bin\\Debug\\training_data\\dbc\\dbc.csv";
 
 
 //const char* d_65cm 	= "d065";
