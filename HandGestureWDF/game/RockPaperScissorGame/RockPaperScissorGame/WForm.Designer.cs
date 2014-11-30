@@ -150,40 +150,40 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Old English Text MT", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Font = new System.Drawing.Font("Palatino Linotype", 15F, System.Drawing.FontStyle.Bold);
             this.label3.Location = new System.Drawing.Point(44, 18);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(52, 24);
+            this.label3.Size = new System.Drawing.Size(58, 27);
             this.label3.TabIndex = 14;
             this.label3.Text = "Rock";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Old English Text MT", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Font = new System.Drawing.Font("Palatino Linotype", 15F, System.Drawing.FontStyle.Bold);
             this.label4.Location = new System.Drawing.Point(219, 17);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(60, 24);
+            this.label4.Size = new System.Drawing.Size(63, 27);
             this.label4.TabIndex = 15;
             this.label4.Text = "Paper";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Old English Text MT", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Font = new System.Drawing.Font("Palatino Linotype", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(385, 18);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(83, 24);
+            this.label5.Size = new System.Drawing.Size(85, 27);
             this.label5.TabIndex = 16;
             this.label5.Text = "Scissors";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Old English Text MT", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Font = new System.Drawing.Font("Palatino Linotype", 15F, System.Drawing.FontStyle.Bold);
             this.label6.Location = new System.Drawing.Point(557, 17);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(115, 24);
+            this.label6.Size = new System.Drawing.Size(121, 27);
             this.label6.TabIndex = 17;
             this.label6.Text = "Score Board";
             // 
@@ -221,14 +221,15 @@
             this.lableStartGame.Name = "lableStartGame";
             this.lableStartGame.Size = new System.Drawing.Size(464, 44);
             this.lableStartGame.TabIndex = 19;
-            this.lableStartGame.Text = "Waiting for the gesture starting the game";
+            this.lableStartGame.Text = "Please wave your hand to start the game!";
             this.lableStartGame.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // WForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(727, 530);
+            this.BackColor = System.Drawing.Color.LightGray;
+            this.ClientSize = new System.Drawing.Size(731, 514);
             this.Controls.Add(this.lableStartGame);
             this.Controls.Add(this.winnerLabel);
             this.Controls.Add(this.listBox1);
@@ -244,6 +245,7 @@
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.paperPicturebox);
             this.Controls.Add(this.rockPicturebox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "WForm";
             this.Text = "Rock-Paper-Scissors Game";
             this.Load += new System.EventHandler(this.Form1_Load);

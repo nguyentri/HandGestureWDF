@@ -11,6 +11,7 @@ using System.Threading;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.IO;
+using System.Diagnostics;
 using AForge.Video.FFMPEG;
 
 using maincpp;
@@ -32,12 +33,15 @@ namespace HandGestRecg
 
         VideoFileWriter writer = new VideoFileWriter();
 
+        Thread maincppT;
+        Thread dispImgT;
+
         public MainWDF()
         {
             InitializeComponent();
 
-            Thread maincppT = new Thread(maincpp_func);
-            Thread dispImgT = new Thread(DisplayImg);
+            maincppT = new Thread(maincpp_func);
+            dispImgT = new Thread(DisplayImg);
 
             maincppT.Priority = ThreadPriority.Highest;
             dispImgT.Priority = ThreadPriority.Normal;
@@ -161,7 +165,9 @@ namespace HandGestRecg
                     videoControlObj.VideoControl = 27;//ESC
                     Thread.Sleep(500);
                     //Application.Exit(e);
-                    Environment.Exit(0);
+                    maincppT.Join();
+                    dispImgT.Join();
+                    //Environment.Exit(0);
                     break;
             }
         }

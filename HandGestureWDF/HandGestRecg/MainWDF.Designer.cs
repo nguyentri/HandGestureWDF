@@ -292,6 +292,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pictureBox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWDF";
             this.Text = "HAND GESTURE RECOGNITION SYSTEM WITH KINECT SENSOR";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();

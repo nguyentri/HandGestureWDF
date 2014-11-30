@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 using System.IO;
+using System.Diagnostics;
 
 using maincpp;
 using ImageTakeNS;
@@ -26,19 +27,22 @@ namespace RockPaperScissorGame
 
         bool startGame;
 
+        Thread GestureSysT;
+        Thread DispT;
+
         public WForm()
         {
             InitializeComponent();
 
             startGame = false;
 
-            Thread maincppT = new Thread(maincpp_func);
-            Thread dispImgT = new Thread(main_funcgame);
+            GestureSysT = new Thread(maincpp_func);
+            DispT = new Thread(main_funcgame);
 
-            maincppT.Priority = ThreadPriority.Highest;
-            dispImgT.Priority = ThreadPriority.Normal;
-            maincppT.Start();
-            dispImgT.Start();
+            GestureSysT.Priority = ThreadPriority.Highest;
+            DispT.Priority = ThreadPriority.Normal;
+            GestureSysT.Start();
+            DispT.Start();
         }
 
 
@@ -56,7 +60,7 @@ namespace RockPaperScissorGame
                 {
                     startGame = true;
                 }
-                else if (videoControlObj.videoOutGesture_ub == 6 || videoControlObj.videoOutGesture_ub == 3)
+                else if (videoControlObj.videoOutGesture_ub == 7 || videoControlObj.videoOutGesture_ub == 3)
                 {
                     startGame = true;
                     btnClear_Click(null, null);
@@ -85,7 +89,7 @@ namespace RockPaperScissorGame
                     }
                     else
                     {
-                        lableStartGame.Text = "Please take your choose!";
+                        lableStartGame.Text = "Please take your choise!";
                     }
                 }
             }
@@ -105,10 +109,27 @@ namespace RockPaperScissorGame
 
         private void main_funcgame()
         {
-            for (; ; )
+            try
             {
-                this.Invoke(new UpdateStatusInvoker(UpdateStatus));
-                Thread.Sleep(10);
+                if (IsHandleCreated)
+                {
+                    if (InvokeRequired) {
+                        for (; ; )
+                        {
+                    
+                            this.Invoke(new UpdateStatusInvoker(UpdateStatus));
+                            Thread.Sleep(10);
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Console.WriteLine("\nMessage ---\n{0}", ex.Message);
             }
         }
 
@@ -244,6 +265,28 @@ namespace RockPaperScissorGame
                     break;
             }
         }
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+
+            if (e.CloseReason == CloseReason.WindowsShutDown) return;
+
+            // Confirm user wants to close
+            switch (MessageBox.Show(this, "Are you sure you want to close?", "Closing", MessageBoxButtons.YesNo))
+            {
+                case DialogResult.No:
+                    e.Cancel = true;
+                    break;
+                default:
+                    // The user wants to exit the application. Close everything down.
+                    videoControlObj.VideoControl = 27;//ESC
+                    Thread.Sleep(500);
+                    //Application.Exit(e);
+                    Environment.Exit(0);
+                    break;
+            }
+        }
+
 
     }
 }
