@@ -11,7 +11,7 @@
 
 #define FINGER_NUM 		5
 #define SAMPLE_NUM_MAX  99
-#define DEPTH_NUM		4
+#define USER_NUM		5
 #define GEST_NUM		11
 
 extern const char* trDBC_FileName_c;

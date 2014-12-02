@@ -24,8 +24,8 @@ using namespace System::Threading;
 int captureImage(const IplImage* IplRawImg);
 
 static uint16_t imgidx = 0;
-static char ImgFileName_c[40] = ".\\training_data\\image\\imgxxx.png";
-static char InfImgFName_c[40] = ".\\training_data\\image\\imgxxx.txt";
+static char ImgFileName_c[40] = ".\\data\\image\\imgxxx.png";
+static char InfImgFName_c[40] = ".\\data\\image\\imgxxx.txt";
 extern char t_temp_c[3];
 
 CvFont NoticeFont;
@@ -130,8 +130,8 @@ int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, VideoControlCls^ vid
 									} 
 								};
 
-								strncpy(ImgFileName_c + 25, (const char*)&t_temp_c, 3);
-								strncpy(InfImgFName_c + 25, (const char*)&t_temp_c, 3);
+								strncpy(ImgFileName_c + 16, (const char*)&t_temp_c, 3);
+								strncpy(InfImgFName_c + 16, (const char*)&t_temp_c, 3);
 								cvSaveImage(ImgFileName_c,  HandSegmObj.pBinImag);
 
 								//save image information
@@ -184,6 +184,17 @@ int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, VideoControlCls^ vid
 				printf("error in training data");
 			}
 		} 
+		else if(videoControlObj->VideoControl == 200)
+		{
+			videoControlObj->VideoControl = 0xff;
+			if(testing_s32()!= 0)
+			{
+				printf("error in testing data");
+			}
+			else{
+
+			}
+		}
 		else{
 		}
 	}

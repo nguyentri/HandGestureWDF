@@ -122,12 +122,12 @@ typedef struct HandGesture {
 	CvSeq* fingerseq;
 	CvMemStorage* fingerstorage;
 
-	int		num_fingers;
+	uint8_t	num_fingers;
 	float		hand_radius;
-	int		num_defects;
+	uint8_t		num_defects;
 	float    angle_defects[NUM_DEFECTS];
 	float		dfdisthreshold;
-	int		handDepth;
+	uint16_t		handDepth;
 	float contourAxisAngle;
 
 	std::vector<FingerNameE>namedFingers;

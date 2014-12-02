@@ -27,15 +27,10 @@
 
 FILE* g_trnDBC_pfi;
 
-//const char* trDBC_FileName_c = ".\\training_data\\dbc\\dbc.csv";
-const char* trDBC_FileName_c = "d:\\Thesis\\source\\githubSource\\HandGestureWDF.git\\trunk\\HandGestureWDF\\HandGestRecg\\bin\\Debug\\training_data\\dbc\\dbc.csv";
+const char* trDBC_FileName_c = ".\\data\\dbc\\dbc.csv";
 
+const char* fname[USER_NUM] =  {"user0", "user1", "user2", "user3", "user4"};
 
-//const char* d_65cm 	= "d065";
-//const char* d_70cm 	= "d700";
-//const char* d_100cm = "d100";
-const char* fname[DEPTH_NUM] = {"user0", "user1", "user2", "user4"};
-//const uint16_t  depth_u16[DEPTH_NUM] = {792};
 char t_temp_c[3];
 
 void sortArray_V(float* const arr_pc, const uint8_t arrLen_u8)
@@ -77,11 +72,11 @@ void sortFingers_V(CvPoint* arr_pc, const uint8_t arrLen_u8)
     }
 }
 
-char ImgFileName_c[40];	//= ".\\training_data\\userx\\numx\\imgxx.png";
-char ImgFileName0_c[40]; //= ".\\training_data\\userx\\numx\\imgx.png";
+char ImgFileName_c[40];	//= ".\\data\\userx\\numx\\imgxx.png";
+char ImgFileName0_c[40]; //= ".\\data\\userx\\numx\\imgx.png";
 
-char DepthFileName_c[40]; //= ".\\training_data\\userx\\numx\\imgxx.txt";
-char DepthFileName0_c[40]; //= ".\\training_data\\userx\\numx\\imgx.txt";
+char DepthFileName_c[40]; //= ".\\data\\userx\\numx\\imgxx.txt";
+char DepthFileName0_c[40]; //= ".\\data\\userx\\numx\\imgx.txt";
 
 
 int createDBC_s32(const IplImage*	input_image)
@@ -113,19 +108,19 @@ int createDBC_s32(const IplImage*	input_image)
 	}
 
 	
-	while(t_user_num < DEPTH_NUM)
+	while(t_user_num < USER_NUM)
 	{
 		//Initalize name of files
-		strcpy (ImgFileName_c, ".\\training_data\\userx\\numx\\imgxx.png");
-		strcpy (ImgFileName0_c,".\\training_data\\userx\\numx\\imgx.png");
-		strcpy (DepthFileName_c, ".\\training_data\\userx\\numx\\imgxx.txt");
-		strcpy (DepthFileName0_c, ".\\training_data\\userx\\numx\\imgx.txt");
+		strcpy (ImgFileName_c, ".\\data\\userx\\numx\\imgxx.png");
+		strcpy (ImgFileName0_c,".\\data\\userx\\numx\\imgx.png");
+		strcpy (DepthFileName_c, ".\\data\\userx\\numx\\imgxx.txt");
+		strcpy (DepthFileName0_c, ".\\data\\userx\\numx\\imgx.txt");
 		/* Get file name */
 		/* Replace dxxx to folder name of depth image */
-		strncpy(ImgFileName_c + 16, fname[t_user_num], 5);
-		strncpy(ImgFileName0_c + 16, fname[t_user_num], 5);
-		strncpy(DepthFileName_c + 16, fname[t_user_num], 5);
-		strncpy(DepthFileName0_c + 16, fname[t_user_num], 5);
+		strncpy(ImgFileName_c + 7, fname[t_user_num], 5);
+		strncpy(ImgFileName0_c + 7, fname[t_user_num], 5);
+		strncpy(DepthFileName_c + 7, fname[t_user_num], 5);
+		strncpy(DepthFileName0_c + 7, fname[t_user_num], 5);
 
 		t_gest_idx_u8 = 1;
 		while(t_gest_idx_u8 < GEST_NUM)
@@ -133,18 +128,18 @@ int createDBC_s32(const IplImage*	input_image)
 			if(t_gest_idx_u8 < 10)
 			{
 				sprintf(&t_temp_c[0],"%d", t_gest_idx_u8);	
-				strncpy(ImgFileName_c + 25, (const char*)&t_temp_c, 1);
-				strncpy(ImgFileName0_c + 25, (const char*)&t_temp_c, 1);
-				strncpy(DepthFileName_c + 25, (const char*)&t_temp_c, 1);
-				strncpy(DepthFileName0_c + 25, (const char*)&t_temp_c, 1);
+				strncpy(ImgFileName_c + 16, (const char*)&t_temp_c, 1);
+				strncpy(ImgFileName0_c + 16, (const char*)&t_temp_c, 1);
+				strncpy(DepthFileName_c + 16, (const char*)&t_temp_c, 1);
+				strncpy(DepthFileName0_c + 16, (const char*)&t_temp_c, 1);
 			}
 			else
 			{
 				sprintf(&t_temp_c[0],"%d", t_gest_idx_u8);	
-				strncpy(ImgFileName_c + 24, (const char*)&t_temp_c, 2);
-				strncpy(ImgFileName0_c + 24, (const char*)&t_temp_c, 2);
-				strncpy(DepthFileName_c + 24, (const char*)&t_temp_c, 2);
-				strncpy(DepthFileName0_c + 24, (const char*)&t_temp_c, 2);
+				strncpy(ImgFileName_c + 15, (const char*)&t_temp_c, 2);
+				strncpy(ImgFileName0_c + 15, (const char*)&t_temp_c, 2);
+				strncpy(DepthFileName_c + 15, (const char*)&t_temp_c, 2);
+				strncpy(DepthFileName0_c + 15, (const char*)&t_temp_c, 2);
 			}
 
  			t_smp_idx_u8 = 1;
@@ -156,8 +151,8 @@ int createDBC_s32(const IplImage*	input_image)
 				if(t_smp_idx_u8 < 10)
 				{
 					sprintf(t_temp_c,"%d", t_smp_idx_u8);
-					strncpy(ImgFileName0_c + 30, (const char*)&t_temp_c, 1);
-					strncpy(DepthFileName0_c + 30, (const char*)&t_temp_c, 1);
+					strncpy(ImgFileName0_c + 21, (const char*)&t_temp_c, 1);
+					strncpy(DepthFileName0_c + 21, (const char*)&t_temp_c, 1);
 
 					/*open image sample */
 					t_imgSamp_pImg = cvLoadImage(ImgFileName0_c, CV_LOAD_IMAGE_GRAYSCALE);
@@ -245,21 +240,19 @@ int createDBC_s32(const IplImage*	input_image)
 				else //number of samples is greater than or equal to 10
 				{
 					sprintf(t_temp_c,"%d", t_smp_idx_u8);
-					strncpy(ImgFileName_c + 30, (const char*)&t_temp_c, 2);
-					strncpy(DepthFileName_c + 30, (const char*)&t_temp_c, 2);
+					strncpy(ImgFileName_c + 21, (const char*)&t_temp_c, 2);
+					strncpy(DepthFileName_c + 21, (const char*)&t_temp_c, 2);
 
 					/*open image sample */
 					t_imgSamp_pImg = cvLoadImage(ImgFileName_c, CV_LOAD_IMAGE_GRAYSCALE);
-					if(t_imgSamp_pImg != NULL)
+					//Get depth of sample
+					FILE* depth_F = fopen(DepthFileName0_c, "r");
+					if((t_imgSamp_pImg != NULL) && (depth_F != NULL))
 					{	
-						//Get depth of sample
-						FILE* depth_F = fopen(DepthFileName_c, "r");
-						if(depth_F != NULL){
-							//Get the depth of hand point
-							fscanf(depth_F, "%d,", &hand_st.p.x);
-							fscanf(depth_F, "%d,", &hand_st.p.y);
-							fscanf(depth_F, "%d,", &hand_st.d);	
-						}
+						//Get the depth of hand point
+						fscanf(depth_F, "%d,", &hand_st.p.x);
+						fscanf(depth_F, "%d,", &hand_st.p.y);
+						fscanf(depth_F, "%d,", &hand_st.d);
 						fclose(depth_F);
 
 						/*extract feature */
@@ -325,6 +318,7 @@ int createDBC_s32(const IplImage*	input_image)
 						t_smp_idx_u8 = 1;
 						break;
 					}
+
 				}
 						
 			}

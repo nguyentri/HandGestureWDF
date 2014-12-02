@@ -48,6 +48,7 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.buttonSnapshot = new System.Windows.Forms.Button();
             this.buttonTraining = new System.Windows.Forms.Button();
+            this.buttonTesting = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
@@ -252,7 +253,7 @@
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.groupBox3.Location = new System.Drawing.Point(12, 364);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(156, 206);
+            this.groupBox3.Size = new System.Drawing.Size(157, 113);
             this.groupBox3.TabIndex = 20;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Training Control";
@@ -281,12 +282,25 @@
             this.buttonTraining.UseVisualStyleBackColor = true;
             this.buttonTraining.Click += new System.EventHandler(this.buttonTraining_Click);
             // 
+            // buttonTesting
+            // 
+            this.buttonTesting.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.buttonTesting.Location = new System.Drawing.Point(23, 529);
+            this.buttonTesting.Name = "buttonTesting";
+            this.buttonTesting.Size = new System.Drawing.Size(139, 31);
+            this.buttonTesting.TabIndex = 21;
+            this.buttonTesting.Text = "Do Testing";
+            this.buttonTesting.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonTesting.UseVisualStyleBackColor = true;
+            this.buttonTesting.Click += new System.EventHandler(this.buttonTesting_Click);
+            // 
             // MainWDF
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Info;
             this.ClientSize = new System.Drawing.Size(995, 618);
+            this.Controls.Add(this.buttonTesting);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.panel1);
@@ -328,6 +342,7 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button buttonTraining;
         private System.Windows.Forms.Button buttonSnapshot;
+        private System.Windows.Forms.Button buttonTesting;
     }
 }
 

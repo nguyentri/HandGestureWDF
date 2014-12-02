@@ -252,7 +252,7 @@ void find_convex_hull(HandGetureTypeSt *pHandGestureSt)
 
 void HandDisplay(HandGetureTypeSt *pHandGestureSt)
 {
-	int i;
+	uint16_t i;
 
 	if (pHandGestureSt->depthImg_b == true) {
 

@@ -179,5 +179,10 @@ namespace HandGestRecg
             videoControlObj.VideoControl = 111;// allow to capture image
         }
 
+        private void buttonTesting_Click(object sender, EventArgs e)
+        {
+            videoControlObj.VideoControl = 200;// testing
+        }
+
     }
 }
