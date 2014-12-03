@@ -164,7 +164,7 @@ int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, VideoControlCls^ vid
 						imgTkObj->imgIsUpdated_b = true;
 					//}
 				}
-				else
+				else if (HandViewerObj.training_flag == TRUE)
 				{
 					videoControlObj->VideoControl = 0xff;
 					HandViewerObj.training_flag = FALSE;
@@ -172,7 +172,22 @@ int exmainCpp::mainCpp(ImageTakeNS::ImageTakeCls^ imgTkObj, VideoControlCls^ vid
 					{
 						printf("error in training data");
 					}
-				} 				
+				} 
+				else{}
+
+				if(videoControlObj->VideoControl == 200)
+				{
+					videoControlObj->VideoControl = 0xff;
+					if(testing_s32()!= 0)
+					{
+						printf("error in testing data");
+					}
+					else{
+
+					}
+				}
+				else{
+				}				
 			}
 		}
 		else if (HandViewerObj.training_flag == TRUE)

@@ -228,8 +228,10 @@ int testing_s32(void)
 		strncpy(TestDepthFileName_c + 12, testingUser[t_testUser_num], 5);
 		strncpy(TestDepthFileName0_c + 12, testingUser[t_testUser_num], 5);
 
-		t_gest_idx_u8 = 1;
-		while(t_gest_idx_u8 < GEST_NUM)
+		fprintf(g_testing_pfi, "%s\n", testingUser[t_testUser_num]);
+
+		t_gest_idx_u8 = 0;
+		while(t_gest_idx_u8 <= GEST_NUM)
 		{
 			if(t_gest_idx_u8 < 10)
 			{
@@ -328,9 +330,9 @@ int testing_s32(void)
 					strncpy(TestDepthFileName_c + 26, (const char*)&t_temp_c, 2);
 
 					/*open image sample */
-					t_imgSamp_pImg = cvLoadImage(TestImgFileName0_c, CV_LOAD_IMAGE_GRAYSCALE);
+					t_imgSamp_pImg = cvLoadImage(TestImgFileName_c, CV_LOAD_IMAGE_GRAYSCALE);
 					//Get depth of sample
-					FILE* depth_F = fopen(TestDepthFileName0_c, "r");
+					FILE* depth_F = fopen(TestDepthFileName_c, "r");
 					if((t_imgSamp_pImg != NULL) && (depth_F != NULL))
 					{	
 						//Get the depth of hand point

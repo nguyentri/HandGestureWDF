@@ -246,7 +246,7 @@ int createDBC_s32(const IplImage*	input_image)
 					/*open image sample */
 					t_imgSamp_pImg = cvLoadImage(ImgFileName_c, CV_LOAD_IMAGE_GRAYSCALE);
 					//Get depth of sample
-					FILE* depth_F = fopen(DepthFileName0_c, "r");
+					FILE* depth_F = fopen(DepthFileName_c, "r");
 					if((t_imgSamp_pImg != NULL) && (depth_F != NULL))
 					{	
 						//Get the depth of hand point
