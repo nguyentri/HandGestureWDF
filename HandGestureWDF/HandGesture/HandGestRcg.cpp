@@ -23,7 +23,7 @@
 using namespace cv;
 
 /*Definations  */
-#define NUMBER_OF_TRAINING_SAMPLES 787
+#define NUMBER_OF_TRAINING_SAMPLES 620
 #define ATTRIBUTES_PER_SAMPLE 15
 #define NUMBER_OF_TESTING_SAMPLES 1
 #define NUMBER_OF_CLASSES 1
