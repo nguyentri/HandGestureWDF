@@ -29,7 +29,7 @@ using namespace cv;
 #define NUMBER_OF_CLASSES 1
 
 #define GEST_CNT_MAX  3
-#define USER_NUM 4
+#define USER_NUM 9
 
 Mat data = Mat(NUMBER_OF_TRAINING_SAMPLES, ATTRIBUTES_PER_SAMPLE, CV_32FC1);
 Mat training_classifications = Mat(NUMBER_OF_TRAINING_SAMPLES, 1, CV_32FC1);	
@@ -47,7 +47,7 @@ bool gest_int_flag = true;
 
 /* for testing purpose */
 static const char* TestResultFName_c = ".\\data\\test\\test_res.csv";
-static const char* testingUser[USER_NUM] = {"user0", "user1", "user2", "user4"};
+static const char* testingUser[USER_NUM] = {"user0", "user1", "user2","user3", "user4", "user5", "user6", "user7", "user8"};
 
 static char TestImgFileName_c[41];	//= ".\\data\\test\\userx\\numx\\imgxx.png";
 static char TestImgFileName0_c[40]; //= ".\\data\\test\\userx\\numx\\imgx.png";
