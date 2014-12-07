@@ -114,7 +114,7 @@ void init_HandGestureSt(HandGetureTypeSt *pHandGestureSt)
 	pHandGestureSt->cvFontFingerName = cvFont(1.2, 1);
 	pHandGestureSt->cvFontFingerNumber = cvFont(5, 2);
 
-	pHandGestureSt->forcearm_img = cvCreateImage(cvSize(640, 480), 8, 1);
+	//pHandGestureSt->forcearm_img = cvCreateImage(cvSize(640, 480), 8, 1);
 
 	pHandGestureSt->contour_st = cvCreateMemStorage(0);
 	pHandGestureSt->hull_st = cvCreateMemStorage(0);
